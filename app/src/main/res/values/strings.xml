@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">TaxPh Calculator</string>
+
+    <string-array name="string_array_menu">
+        <item>Basic Information</item>
+        <item>Miscellaneous</item>
+        <item>Allowance</item>
+    </string-array>
+
+    <string-array name="string_array_salary_period">
+        <item>Semi Monthly</item>
+        <item>Monthly</item>
+    </string-array>
+
+    <string-array name="string_array_employment_status">
+        <item>Employed</item>
+        <item>Self Employed</item>
+        <item>Voluntary Member</item>
+        <item>OFW</item>
+    </string-array>
+
+    <string-array name="string_array_civil_status">
+        <item>Single</item>
+        <item>Married</item>
+        <item>1 Dependent</item>
+        <item>2 Dependents</item>
+        <item>3 Dependents</item>
+        <item>4 Dependents</item>
+    </string-array>
+
+</resources>
