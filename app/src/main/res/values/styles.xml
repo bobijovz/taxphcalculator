@@ -8,4 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CardViewStyle">
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:radius">4dp</item>
+    </style>
+
+    <style name="ButtonHeaderStyle">
+        <item name="android:background">@drawable/background_rounded_top</item>
+        <item name="android:drawableRight">@drawable/ic_keyboard_arrow_down_black_24dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">#555</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
 </resources>
