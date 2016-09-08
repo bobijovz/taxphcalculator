@@ -27,7 +27,7 @@
                     android:drawableTint="#555"
                     android:text="Basic details" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/content_basic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -36,6 +36,7 @@
                     android:visibility="visible">
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/label1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -44,46 +45,126 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Basic Salary"
-                            android:inputType="number"/>
+                            android:inputType="number" />
                     </android.support.design.widget.TextInputLayout>
 
+
                     <TextView
+                        android:id="@+id/label5"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/label1"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:text="SSS Contribution"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/textview_sss_contrib"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/label5"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="1234"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/label6"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/spinner_salary_period"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:text="Philhealth Contribution"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/textview_philhealth_contrib"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/label6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="1234"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/label7"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/spinner_employment_status"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:text="Pag-ibig Contribution"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/textview_pagibig_contrib"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/label7"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="1234"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/label2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/label1"
                         android:paddingLeft="10dp"
                         android:text="Salary Period"
                         android:textColor="@color/colorAccent"
-                        android:textSize="12sp"
-
-                        />
+                        android:textSize="12sp" />
 
                     <Spinner
                         android:id="@+id/spinner_salary_period"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/label2"
+                        android:layout_toLeftOf="@id/textview_sss_contrib"
                         android:drawSelectorOnTop="true"
                         android:entries="@array/string_array_salary_period" />
 
                     <TextView
+                        android:id="@+id/label3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/spinner_salary_period"
                         android:paddingLeft="10dp"
                         android:text="Employment Status"
                         android:textColor="@color/colorAccent"
-                        android:textSize="12sp"
-
-                        />
+                        android:textSize="12sp" />
 
                     <Spinner
                         android:id="@+id/spinner_employment_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/label3"
+                        android:layout_toLeftOf="@id/textview_philhealth_contrib"
                         android:drawSelectorOnTop="true"
                         android:entries="@array/string_array_employment_status" />
 
                     <TextView
+                        android:id="@+id/label4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/spinner_employment_status"
                         android:paddingLeft="10dp"
                         android:text="Civil Status"
                         android:textColor="@color/colorAccent"
@@ -93,9 +174,11 @@
                         android:id="@+id/spinner_civil_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/label4"
+                        android:layout_toLeftOf="@id/textview_pagibig_contrib"
                         android:drawSelectorOnTop="true"
                         android:entries="@array/string_array_civil_status" />
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -125,7 +208,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="10dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -136,7 +219,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="HMO"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -148,7 +231,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Overtime Pay"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -160,7 +243,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Night Differential"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -172,7 +255,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Holiday Pay"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -184,7 +267,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Absent"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -196,7 +279,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Tardiness"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -208,7 +291,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Undertime"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -227,11 +310,10 @@
 
                 <Button
                     android:id="@+id/header_allowance"
+                    style="@style/ButtonHeaderStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Allowance"
-                    style="@style/ButtonHeaderStyle"
-                     />
+                    android:text="Allowance" />
 
                 <LinearLayout
                     android:id="@+id/content_allowance"
@@ -239,7 +321,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="10dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -250,7 +332,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Meal"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -262,7 +344,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Transportation"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -274,7 +356,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="COLA"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -286,7 +368,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Other"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -298,13 +380,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Tax Shielded"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -318,23 +399,23 @@
                 android:id="@+id/btn_reset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
+                android:background="@drawable/bg_btn_selector"
                 android:text="Reset"
                 android:textColor="#eee"
-                android:textStyle="bold"
-                android:background="@drawable/bg_btn_selector"
-                android:layout_margin="2dp"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_calculate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
+                android:background="@drawable/bg_btn_selector"
                 android:text="Calculate"
                 android:textColor="#eee"
-                android:textStyle="bold"
-                android:background="@drawable/bg_btn_selector"
-                android:layout_margin="2dp"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </layout>

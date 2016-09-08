@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TaxPhCalculator.iml" filepath="$PROJECT_DIR$/TaxPhCalculator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/taxphcalculator.iml" filepath="$PROJECT_DIR$/taxphcalculator.iml" />
     </modules>
   </component>
 </project>
