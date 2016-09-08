@@ -18,4 +18,19 @@ public class Philhealth extends SugarRecord{
         this.share = share;
     }
 
+    public double getBaseSalary() {
+        return baseSalary;
+    }
+
+    public double getShare() {
+        return share;
+    }
+
+    public void setBaseSalary(double baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+
+    public void setShare(double share) {
+        this.share = share;
+    }
 }
