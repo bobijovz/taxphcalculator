@@ -2,18 +2,21 @@ package com.itseasyright.app.taxphcalculator;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
+import android.databinding.adapters.TextViewBindingAdapter;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.itseasyright.app.taxphcalculator.databinding.ActivityMainBinding;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {
     private ActivityMainBinding binder;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         binder.headerBasic.setOnClickListener(this);
         binder.headerMisc.setOnClickListener(this);
         binder.headerAllowance.setOnClickListener(this);
+        binder.spinnerCivilStatus.setOnItemSelectedListener(this);
+        binder.spinnerEmploymentStatus.setOnItemSelectedListener(this);
+        binder.spinnerSalaryPeriod.setOnItemSelectedListener(this);
+        binder.edittextBasicSalary.addTextChangedListener(this);
         collapse(binder.contentMisc);
         collapse(binder.contentAllowance);
         expand(binder.contentBasic);
@@ -40,7 +47,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                 break;
             case R.id.header_basic:
-                //binder.headerBasic.setCompoundDrawables(null,null,getResources().getDrawable(R.drawable.ic_keyboard_arrow_up_black_24dp),null);
                 collapse(binder.contentMisc);
                 collapse(binder.contentAllowance);
                 expand(binder.contentBasic);
@@ -56,6 +62,46 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 collapse(binder.contentBasic);
                 break;
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch(view.getId()){
+            case R.id.spinner_salary_period:
+
+                break;
+            case R.id.spinner_employment_status:
+                if (i == 0){
+
+                } else {
+
+                }
+                break;
+            case R.id.spinner_civil_status:
+
+                break;
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
+
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
 
@@ -112,5 +158,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
         v.startAnimation(a);
     }
+
+
 
 }

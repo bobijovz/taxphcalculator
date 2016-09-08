@@ -1,6 +1,5 @@
 package com.itseasyright.app.taxphcalculator;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,19 +18,28 @@ import java.util.logging.Logger;
 /**
  * Created by dione on 7 Sep 2016.
  */
-public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
+public class ReadFileFromServerAsync extends AsyncTask<String, Integer, String> {
     private DateModifiedLogs dateModifiedLogs;
     private Philhealth philhealth;
     private Sss sss;
     private boolean isModified = false;
     private Context context;
-    public ReadFileFromServerAsync(Context context){
+    private ITaxCalculator iTaxCalculator;
+
+    public ReadFileFromServerAsync(Context context, ITaxCalculator iTaxCalculator) {
         this.context = context;
+        this.iTaxCalculator = iTaxCalculator;
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+
     }
 
     @Override
@@ -42,9 +50,10 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        iTaxCalculator.OnFinishLoadingData(true);
     }
 
-    private String readTextFileFromPasteBin(){
+    private String readTextFileFromPasteBin() {
         String data = "";
         try {
             // Create a URL for the desired page
@@ -66,10 +75,11 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
         return data;
     }
 
-    private void splitData(String data){
+    private void splitData(String data) {
         String[] headersArray = data.split("\\|\\|"); // SAMPLE DATA  DATE_MODIFIED:09-07-2016||PHILHEALTH:8000-100.00||SSS:||BIR:
-        for (int i=0;i<headersArray.length;i++){
+        for (int i = 0; i < headersArray.length; i++) {
             dateModifiedLogs = new DateModifiedLogs();
+            int recordCount = dateModifiedLogs.listAll(DateModifiedLogs.class).size();
             int dateModifiedRecordCount = dateModifiedLogs.listAll(DateModifiedLogs.class).size();
             int philhealthRecordCount = philhealth.listAll(Philhealth.class).size();
             int sssRecordCount = sss.listAll(Sss.class).size();
@@ -93,17 +103,17 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
         }
     }
 
-    private void syncDateModified(String[] headersArray, int dateModifiedRecordCount){
+    private void syncDateModified(String[] headersArray, int dateModifiedRecordCount) {
         String dateModifiedValue = headersArray[1]; // OUTPUT : 09-07-2016
-        if (dateModifiedRecordCount<1){
+        if (dateModifiedRecordCount < 1) {
             saveDateModifiedLog(dateModifiedValue); // Save Automatically if no data saved
             isModified = true;
-        }else{
+        } else {
             DateModifiedLogs dateModifiedLastRecord = dateModifiedLogs.findById(DateModifiedLogs.class, dateModifiedRecordCount);
-            if (dateModifiedLastRecord.getDateModified().equals(dateModifiedValue)){
+            if (dateModifiedLastRecord.getDateModified().equals(dateModifiedValue)) {
                 //No modification on the data
                 isModified = false;
-            }else{
+            } else {
                 //Have Modification on data
                 updateDateModifiedLog(dateModifiedLastRecord, dateModifiedValue);
                 isModified = true;
@@ -111,7 +121,7 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
         }
     }
 
-    private void syncPhilhealth(String[] philhealthArray, int philhealthRecordCount){
+    private void syncPhilhealth(String[] philhealthArray, int philhealthRecordCount) {
         if (isModified){
             String[] philhealthData = philhealthArray[1].split(","); // OUTPUT [0-100],[9000-112.5]
             if (philhealthRecordCount < 1){ // Save Automatically if no data saved
@@ -127,7 +137,7 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
             }
         }
     }
-    private void syncSss(String[] sssArray, int sssRecordCount){
+    private void syncSss(String[] sssArray, int sssRecordCount) {
         if (isModified){
             String[] sssData = sssArray[1].split(","); // OUTPUT 1000-36.3-83.7,1250-54.5-120.5
             if (sssRecordCount < 1){ // Save Automatically if no data saved
@@ -143,7 +153,7 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
             }
         }
     }
-    private void syncBir(){
+    private void syncBir() {
         if (isModified){
             // code
         }
@@ -175,13 +185,13 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
         philhealth.delete();
     }
 
-    private void updateDateModifiedLog(DateModifiedLogs dateModifiedLogs, String newValue){
+    private void updateDateModifiedLog(DateModifiedLogs dateModifiedLogs, String newValue) {
         dateModifiedLogs.setDateModified(newValue);
         dateModifiedLogs.save();
         Log.d("UPDATED", "YES");
     }
 
-    private void saveDateModifiedLog(String dateModified){
+    private void saveDateModifiedLog(String dateModified) {
         dateModifiedLogs = new DateModifiedLogs(dateModified);
         dateModifiedLogs.save();
         Log.d("SAVED", "YES");
