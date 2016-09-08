@@ -1,8 +1,9 @@
 package com.itseasyright.app.taxphcalculator;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 
 import com.itseasyright.app.taxphcalculator.databinding.ActivityMainBinding;
 
-public class MainActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {
     private ActivityMainBinding binder;
     private String[] salaryPeriodArray;
     private String[] employmentStatusArray;
@@ -46,6 +47,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
         switch (view.getId()){
             case R.id.btn_calculate:
                 Toast.makeText(this,"try",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, ResultActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_reset:
 

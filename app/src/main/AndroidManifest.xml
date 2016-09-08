@@ -24,9 +24,9 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.itseasyright.app.taxphcalculator" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".ResultActivity"/>
 
-        </activity>
         <activity
             android:name=".SyncDataActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">

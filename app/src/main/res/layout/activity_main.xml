@@ -45,12 +45,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Basic Salary"
-                            android:inputType="number" />
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
 
                     <TextView
-                        android:id="@+id/label5"
+                        android:id="@+id/tv_sss_label"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -66,15 +66,16 @@
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/label5"
+                        android:layout_below="@id/tv_sss_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="1234"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_above="@+id/textview_philhealth_label" />
 
                     <TextView
-                        android:id="@+id/label6"
+                        android:id="@+id/textview_philhealth_label"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -90,15 +91,16 @@
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/label6"
+                        android:layout_below="@id/textview_philhealth_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="1234"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_above="@+id/textview_pagibig_label" />
 
                     <TextView
-                        android:id="@+id/label7"
+                        android:id="@+id/textview_pagibig_label"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -114,12 +116,13 @@
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/label7"
+                        android:layout_below="@id/textview_pagibig_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="1234"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_alignBottom="@+id/spinner_civil_status" />
 
 
                     <TextView

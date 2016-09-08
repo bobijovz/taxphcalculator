@@ -22,7 +22,7 @@ public class SyncDataActivity extends AppCompatActivity implements ITaxCalculato
         new ReadFileFromServerAsync(getApplicationContext(), this).execute();
 
         //sss query
-//        List<Sss> sssList = Sss.findWithQuery(Sss.class, "select * from sss where salary_range > ? limit 1", "800");
+//        List<Sss> sssList = Sss.findWithQuery(Sss.class, "select * from sss where salary_range < ? limit 1 order by id DESC limit 1", "800");
 //        for (int i=0;i<sssList.size();i++){
 //            Log.d("sss_details", String.valueOf(sssList.get(i).getSalaryRange()));
 //            Log.d("sss_details", String.valueOf(sssList.get(i).geteE()));
