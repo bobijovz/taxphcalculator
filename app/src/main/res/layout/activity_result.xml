@@ -10,52 +10,114 @@
         android:layout_gravity="center">
 
         <TextView
+            android:id="@+id/tv_gross_salary_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_total_allowance_label"
+            android:text="Gross Salary: " />
+
+        <TextView
             android:id="@+id/tv_gross_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gross Salary: " />
+            android:layout_toRightOf="@+id/tv_gross_salary_label"
+            android:text="1234" />
+
+        <TextView
+            android:id="@+id/tv_total_deduction_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_total_allowance_label"
+            android:layout_below="@+id/tv_gross_salary_label"
+            android:text="Total Deduction: " />
 
         <TextView
             android:id="@+id/tv_total_deduction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_gross_salary"
-            android:text="Total Deduction: " />
+            android:layout_below="@+id/tv_gross_salary_label"
+            android:layout_toRightOf="@+id/tv_total_deduction_label"
+            android:text="1234" />
+
+
+        <TextView
+            android:id="@+id/tv_total_allowance_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_deduction_label"
+            android:text="Total Allowance: " />
 
         <TextView
             android:id="@+id/tv_total_allowance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_total_deduction"
-            android:text="Total Allowance: " />
+            android:layout_below="@+id/tv_total_deduction_label"
+            android:layout_toRightOf="@+id/tv_total_allowance_label"
+            android:text="1234" />
+
+        <TextView
+            android:id="@+id/tv_total_misc_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_total_allowance_label"
+            android:layout_below="@+id/tv_total_allowance_label"
+            android:text="Total Misc: " />
 
         <TextView
             android:id="@+id/tv_total_misc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_total_allowance"
-            android:text="Total Misc: " />
+            android:layout_below="@+id/tv_total_allowance_label"
+            android:layout_toRightOf="@+id/tv_total_misc_label"
+            android:text="1234" />
+
+        <TextView
+            android:id="@+id/tv_taxable_income_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_total_allowance_label"
+            android:layout_below="@+id/tv_total_misc_label"
+            android:text="Taxable Income: " />
 
         <TextView
             android:id="@+id/tv_taxable_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_total_misc"
-            android:text="Taxable Income: " />
+            android:layout_below="@+id/tv_total_misc_label"
+            android:layout_toRightOf="@+id/tv_taxable_income_label"
+            android:text="1234" />
+
+        <TextView
+            android:id="@+id/tv_withholding_tax_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_total_allowance_label"
+            android:layout_below="@+id/tv_taxable_income_label"
+            android:text="Withholding Tax: " />
 
         <TextView
             android:id="@+id/tv_withholding_tax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_taxable_income"
-            android:text="Withholding Tax: " />
+            android:layout_below="@+id/tv_taxable_income_label"
+            android:layout_toRightOf="@+id/tv_withholding_tax_label"
+            android:text="1234" />
+
+        <TextView
+            android:id="@+id/tv_net_salary_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_total_allowance_label"
+            android:layout_below="@+id/tv_withholding_tax_label"
+            android:text="Net Salary: " />
 
         <TextView
             android:id="@+id/tv_net_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_withholding_tax"
-            android:text="Net Salary: " />
+            android:layout_below="@+id/tv_withholding_tax_label"
+            android:layout_toRightOf="@+id/tv_net_salary_label"
+            android:text="1234" />
 
 
     </RelativeLayout>
