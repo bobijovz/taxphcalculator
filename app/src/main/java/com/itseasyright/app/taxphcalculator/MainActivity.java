@@ -2,10 +2,10 @@ package com.itseasyright.app.taxphcalculator;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
-import android.databinding.adapters.TextViewBindingAdapter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -17,12 +17,16 @@ import com.itseasyright.app.taxphcalculator.databinding.ActivityMainBinding;
 
 public class MainActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {
     private ActivityMainBinding binder;
-
+    private String[] salaryPeriodArray;
+    private String[] employmentStatusArray;
+    private String[] civilStatusArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binder = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
+        binder = DataBindingUtil.setContentView(MainActivity.this,R.layout.activity_main);
+        salaryPeriodArray = getResources().getStringArray(R.array.string_array_salary_period);
+        employmentStatusArray = getResources().getStringArray(R.array.string_array_employment_status);
+        civilStatusArray = getResources().getStringArray(R.array.string_array_civil_status);
         binder.btnCalculate.setOnClickListener(this);
         binder.btnReset.setOnClickListener(this);
         binder.headerBasic.setOnClickListener(this);
@@ -65,25 +69,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch(view.getId()){
-            case R.id.spinner_salary_period:
-
-                break;
-            case R.id.spinner_employment_status:
-                if (i == 0){
-
-                } else {
-
-                }
-                break;
-            case R.id.spinner_civil_status:
-
-                break;
-        }
-    }
-
-    @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
     }
@@ -95,15 +80,36 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
 
     @Override
     public void afterTextChanged(Editable editable) {
-
+        Log.d("you have entered",binder.edittextBasicSalary.getText().toString());
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch(adapterView.getId()){
+            case R.id.spinner_salary_period:
+                if (i == 0){
+                    Log.d("position",salaryPeriodArray[i]);
+                } else {
+                    Log.d("position",salaryPeriodArray[i]);
+                }
+                break;
+            case R.id.spinner_employment_status:
+                if (i == 0){
+                    Log.d("position",employmentStatusArray[i]);
+                } else {
+                    Log.d("position",employmentStatusArray[i]);
+                }
+                break;
+            case R.id.spinner_civil_status:
+                Log.d("position",civilStatusArray[i]);
+                break;
+        }
+    }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
 
     public static void expand(final View v) {
         v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -158,7 +164,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
         a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
         v.startAnimation(a);
     }
-
 
 
 }

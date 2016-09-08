@@ -43,7 +43,8 @@
                             android:id="@+id/edittext_basic_salary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Basic Salary" />
+                            android:hint="Basic Salary"
+                            android:inputType="number"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <TextView
@@ -134,7 +135,8 @@
                             android:id="@+id/edittext_hmo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="HMO" />
+                            android:hint="HMO"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -145,7 +147,8 @@
                             android:id="@+id/edittext_overtime_pay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Overtime Pay" />
+                            android:hint="Overtime Pay"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -156,7 +159,8 @@
                             android:id="@+id/edittext_night_differential"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Night Differential" />
+                            android:hint="Night Differential"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -167,7 +171,8 @@
                             android:id="@+id/edittext_holiday_pay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Holiday Pay" />
+                            android:hint="Holiday Pay"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -178,7 +183,8 @@
                             android:id="@+id/edittext_absent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Absent" />
+                            android:hint="Absent"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -189,7 +195,8 @@
                             android:id="@+id/edittext_tardiness"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Tardiness" />
+                            android:hint="Tardiness"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -200,7 +207,8 @@
                             android:id="@+id/edittext_undertime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Undertime" />
+                            android:hint="Undertime"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -241,7 +249,8 @@
                             android:id="@+id/edittext_meal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Meal" />
+                            android:hint="Meal"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -252,7 +261,8 @@
                             android:id="@+id/edittext_transportation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Transportation" />
+                            android:hint="Transportation"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -263,7 +273,8 @@
                             android:id="@+id/edittext_cola"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="COLA" />
+                            android:hint="COLA"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -274,7 +285,8 @@
                             android:id="@+id/edittext_other"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Other" />
+                            android:hint="Other"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -285,7 +297,8 @@
                             android:id="@+id/edittext_tax_shielded"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Tax Shielded" />
+                            android:hint="Tax Shielded"
+                            android:inputType="numberDecimal"/>
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
