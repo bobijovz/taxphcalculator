@@ -1,6 +1,5 @@
 package com.itseasyright.app.taxphcalculator;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -11,22 +10,30 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.logging.Logger;
 
 /**
  * Created by dione on 7 Sep 2016.
  */
-public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
+public class ReadFileFromServerAsync extends AsyncTask<String, Integer, String> {
     private DateModifiedLogs dateModifiedLogs;
     private boolean isModified = false;
     private Context context;
-    public ReadFileFromServerAsync(Context context){
+    private ITaxCalculator iTaxCalculator;
+
+    public ReadFileFromServerAsync(Context context, ITaxCalculator iTaxCalculator) {
         this.context = context;
+        this.iTaxCalculator = iTaxCalculator;
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+
     }
 
     @Override
@@ -37,9 +44,10 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        iTaxCalculator.OnFinishLoadingData(true);
     }
 
-    private String readTextFileFromPasteBin(){
+    private String readTextFileFromPasteBin() {
         String data = "";
         try {
             // Create a URL for the desired page
@@ -61,12 +69,12 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
         return data;
     }
 
-    private void splitData(String data){
+    private void splitData(String data) {
         String[] headersArray = data.split("\\|\\|"); // SAMPLE DATA  DATE_MODIFIED:09-07-2016||PHILHEALTH:8000-100.00||SSS:||BIR:
-        for (int i=0;i<headersArray.length;i++){
+        for (int i = 0; i < headersArray.length; i++) {
             dateModifiedLogs = new DateModifiedLogs();
             int recordCount = dateModifiedLogs.listAll(DateModifiedLogs.class).size();
-            switch (headersArray[i].split(":")[0]){ // SAMPLE DATA : DATE_MODIFIED:09-07-2016
+            switch (headersArray[i].split(":")[0]) { // SAMPLE DATA : DATE_MODIFIED:09-07-2016
                 case "DATE_MODIFIED":
                     syncDateModified(headersArray[0].split(":"), recordCount); // OUTPUT [DATE_MODIFIED][09-07-2016]
                     break;
@@ -86,16 +94,16 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
         }
     }
 
-    private void syncDateModified(String[] headersArray, int recordCount){
+    private void syncDateModified(String[] headersArray, int recordCount) {
         String dateModifiedValue = headersArray[1]; // OUTPUT : 09-07-2016
-        if (recordCount<1){
+        if (recordCount < 1) {
             saveDateModifiedLog(dateModifiedValue); // Save Automatically if no data saved
-        }else{
+        } else {
             DateModifiedLogs dateModifiedLastRecord = dateModifiedLogs.findById(DateModifiedLogs.class, recordCount);
-            if (dateModifiedLastRecord.getDateModified().equals(dateModifiedValue)){
+            if (dateModifiedLastRecord.getDateModified().equals(dateModifiedValue)) {
                 //No modification on the data
                 isModified = false;
-            }else{
+            } else {
                 //Have Modification on data
                 updateDateModifiedLog(dateModifiedLastRecord, dateModifiedValue);
                 isModified = true;
@@ -103,29 +111,31 @@ public class ReadFileFromServerAsync extends AsyncTask<String, String, String> {
         }
     }
 
-    private void syncPhilhealth(){
-        if (isModified){
-            // code
-        }
-    }
-    private void syncSss(){
-        if (isModified){
-            // code
-        }
-    }
-    private void syncBir(){
-        if (isModified){
+    private void syncPhilhealth() {
+        if (isModified) {
             // code
         }
     }
 
-    private void updateDateModifiedLog(DateModifiedLogs dateModifiedLogs, String newValue){
+    private void syncSss() {
+        if (isModified) {
+            // code
+        }
+    }
+
+    private void syncBir() {
+        if (isModified) {
+            // code
+        }
+    }
+
+    private void updateDateModifiedLog(DateModifiedLogs dateModifiedLogs, String newValue) {
         dateModifiedLogs.setDateModified(newValue);
         dateModifiedLogs.save();
         Log.d("UPDATED", "YES");
     }
 
-    private void saveDateModifiedLog(String dateModified){
+    private void saveDateModifiedLog(String dateModified) {
         dateModifiedLogs = new DateModifiedLogs(dateModified);
         dateModifiedLogs.save();
         Log.d("SAVED", "YES");
