@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.itseasyright.app.taxphcalculator.Entities.BirSalaryDeductions;
 import com.itseasyright.app.taxphcalculator.Entities.Philhealth;
 import com.itseasyright.app.taxphcalculator.Entities.Sss;
 import com.itseasyright.app.taxphcalculator.databinding.ActivityMainBinding;
@@ -231,10 +230,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binder.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
         }
 
-    }
-
-    public void computeTax() {
-//        List<BirSalaryDeductions> birSalaryDeductionsList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from birsalarydeductions where salary_range < ? order by id DESC limit 1", String.valueOf(binder.edittextBasicSalary.getText()));
     }
 
     public void computeTotalAllowance() {

@@ -9,11 +9,12 @@ public class Sss extends SugarRecord {
     private double salaryRange;
     private double eE;
     private double eR;
-    public Sss(){
+
+    public Sss() {
 
     }
 
-    public Sss(double salaryRange, double eE, double eR){
+    public Sss(double salaryRange, double eE, double eR) {
         this.salaryRange = salaryRange;
         this.eE = eE;
         this.eR = eR;

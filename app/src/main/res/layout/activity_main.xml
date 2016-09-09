@@ -65,14 +65,14 @@
                         android:id="@+id/textview_sss_contrib"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
+                        android:layout_above="@+id/textview_philhealth_label"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/tv_sss_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="1234"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_above="@+id/textview_philhealth_label" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textview_philhealth_label"
@@ -90,14 +90,14 @@
                         android:id="@+id/textview_philhealth_contrib"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
+                        android:layout_above="@+id/textview_pagibig_label"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/textview_philhealth_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="1234"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_above="@+id/textview_pagibig_label" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textview_pagibig_label"
@@ -115,14 +115,14 @@
                         android:id="@+id/textview_pagibig_contrib"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
+                        android:layout_alignBottom="@+id/spinner_civil_status"
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/textview_pagibig_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="1234"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_alignBottom="@+id/spinner_civil_status" />
+                        android:textStyle="bold" />
 
 
                     <TextView
@@ -335,8 +335,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Meal"
-                            android:inputType="numberDecimal"
-                            />
+                            android:inputType="numberDecimal" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout

@@ -12,11 +12,11 @@ public class BirSalaryDeductions extends SugarRecord {
     private double percentage;
     private double exemption;
 
-    public BirSalaryDeductions(){
+    public BirSalaryDeductions() {
 
     }
 
-    public BirSalaryDeductions(double salaryFloor, double salaryCeiling, String maritalStatus, double percentage, double exemption){
+    public BirSalaryDeductions(double salaryFloor, double salaryCeiling, String maritalStatus, double percentage, double exemption) {
         this.salaryFloor = salaryFloor;
         this.salaryCeiling = salaryCeiling;
         this.maritalStatus = maritalStatus;

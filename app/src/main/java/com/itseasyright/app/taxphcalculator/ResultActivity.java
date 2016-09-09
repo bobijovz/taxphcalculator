@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.itseasyright.app.taxphcalculator.Entities.BirSalaryDeductions;
+
+import java.util.List;
+
 /**
  * Created by Nico on 9/8/2016.
  */
@@ -23,7 +27,7 @@ public class ResultActivity extends AppCompatActivity {
         tvTotalContribution = (TextView) findViewById(R.id.tv_total_contribution);
         tvTotalAllowance = (TextView) findViewById(R.id.tv_total_allowance);
 
-        Bundle b =getIntent().getExtras();
+        Bundle b = getIntent().getExtras();
         grossSalary = b.getDouble("grosssalary");
         taxableIncome = b.getDouble("taxableincome");
         totalContribution = b.getDouble("totalcontribution");
@@ -33,5 +37,11 @@ public class ResultActivity extends AppCompatActivity {
         tvTaxableIncome.setText(taxableIncome.toString());
         tvTotalContribution.setText(totalContribution.toString());
         tvTotalAllowance.setText(totalAllowance.toString());
+        computeTax();
+    }
+
+    public void computeTax() {
+        List<BirSalaryDeductions> birSalaryDeductionsList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from bir_salary_deductions where salary_floor < ? < salary_ceiling order by id DESC limit 1", grossSalary.toString());
+        birSalaryDeductionsList.size();
     }
 }
