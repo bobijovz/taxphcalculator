@@ -32,7 +32,7 @@
             android:text="Total Deduction: " />
 
         <TextView
-            android:id="@+id/tv_total_deduction"
+            android:id="@+id/tv_total_contribution"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_gross_salary_label"
