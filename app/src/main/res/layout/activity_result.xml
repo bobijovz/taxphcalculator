@@ -41,7 +41,7 @@
                     android:layout_alignRight="@+id/tv_total_deduction_label"
                     android:gravity="right"
                     android:text="Gross Salary : "
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -53,7 +53,7 @@
                     android:text="1234"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
 
@@ -74,7 +74,7 @@
                     android:gravity="right"
                     android:text="Total Deduction : "
                     android:layout_marginLeft="15dp"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
 
                 <TextView
@@ -87,7 +87,7 @@
                     android:text="1234"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
 
                 <TextView
@@ -98,7 +98,7 @@
                     android:layout_below="@+id/tv_total_deduction_label"
                     android:gravity="right"
                     android:text="Total Allowance : "
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tv_total_allowance"
@@ -110,7 +110,7 @@
                     android:text="1234"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tv_total_misc_label"
@@ -121,7 +121,7 @@
                     android:layout_below="@+id/tv_total_allowance_label"
                     android:gravity="right"
                     android:text="Total Misc : "
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tv_total_misc"
@@ -133,7 +133,7 @@
                     android:text="1234"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tv_taxable_income_label"
@@ -144,7 +144,7 @@
                     android:layout_below="@+id/tv_total_misc_label"
                     android:gravity="right"
                     android:text="Taxable Income : "
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tv_taxable_income"
@@ -156,7 +156,7 @@
                     android:text="1234"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tv_withholding_tax_label"
@@ -167,7 +167,7 @@
                     android:layout_below="@+id/tv_taxable_income_label"
                     android:gravity="right"
                     android:text="WithholdingTax : "
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tv_withholding_tax"
@@ -179,7 +179,7 @@
                     android:text="1234"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:id="@+id/divider2"
@@ -200,7 +200,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="right"
                     android:text="Net Salary : "
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -214,7 +214,7 @@
                     android:text="1234"
                     android:gravity="right"
                     android:layout_marginRight="15dp"
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
