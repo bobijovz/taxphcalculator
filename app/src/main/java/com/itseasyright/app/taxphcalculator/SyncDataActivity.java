@@ -44,7 +44,7 @@ public class SyncDataActivity extends AppCompatActivity implements ITaxCalculato
         }
 
         //bir query
-        List<BirSalaryDeductions> birSalaryDeductionsList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from bir_salary_deductions");
+        List<BirSalaryDeductions> birSalaryDeductionsList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from bir_salary_deductions where salary_ceiling > ? and salary_floor < ? and marital_status = ?", "30000", "30000", "onedependents");
         Log.d("bor_size", String.valueOf(birSalaryDeductionsList.size()));
         for (int i=0;i<birSalaryDeductionsList.size();i++){
             Log.d("bir_detao;s", String.valueOf(birSalaryDeductionsList.get(i).getSalaryFloor()));

@@ -20,6 +20,7 @@
     </string-array>
 
     <string-array name="string_array_civil_status">
+        <item>Zero Exemption</item>
         <item>Single</item>
         <item>Married</item>
         <item>1 Dependent</item>

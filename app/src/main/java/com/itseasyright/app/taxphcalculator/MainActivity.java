@@ -3,6 +3,7 @@ package com.itseasyright.app.taxphcalculator;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,10 +15,12 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.itseasyright.app.taxphcalculator.Entities.BirSalaryDeductions;
 import com.itseasyright.app.taxphcalculator.Entities.Philhealth;
 import com.itseasyright.app.taxphcalculator.Entities.Sss;
 import com.itseasyright.app.taxphcalculator.databinding.ActivityMainBinding;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String[] salaryPeriodArray;
     private String[] employmentStatusArray;
     private String[] civilStatusArray;
+    private String selectedCivilStatus = "zeroexemption";
+    private BirSalaryDeductions birContrib;
     private Double sssContrib = 0.0;
     private Double phContrib = 0.0;
     private Double pagibigContrib = 100.0;
@@ -39,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Double taxShieldedAllowance = 0.0;
     private Double ee;
     private Double er;
+    private Double withholdingTax = 0.0;
+    private Double netIncome = 0.0;
+    private Double totalMisc = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,22 +68,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapse(binder.contentAllowance);
         expand(binder.contentBasic);
         checkValues();
+        binder.spinnerCivilStatus.setSelection(1);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_calculate:
-                Toast.makeText(this, "try", Toast.LENGTH_LONG).show();
-                computeResult();
-                Intent intent = new Intent(this, ResultActivity.class);
-                Bundle b = new Bundle();
-                b.putDouble("grosssalary", grossSalary);
-                b.putDouble("taxableincome", taxableIncome);
-                b.putDouble("totalcontribution", totalContrib);
-                b.putDouble("totalallowance", totalAllowance);
-                intent.putExtras(b);
-                startActivity(intent);
+                if (binder.edittextBasicSalary.length() > 4) {
+                    computeContribution();
+                    computeResult();
+                } else {
+                    Snackbar.make(binder.getRoot(),"Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
+                }
                 break;
             case R.id.btn_reset:
                 resetFields();
@@ -120,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             grossSalary = Double.parseDouble(binder.edittextBasicSalary.getText().toString());
             binder.btnCalculate.setEnabled(true);
         }
+        //computeContribution();
     }
 
     @Override
@@ -130,7 +136,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 computeContribution();
                 break;
             case R.id.spinner_civil_status:
-                Log.d("position", civilStatusArray[i]);
+                if(i == 0){
+                    selectedCivilStatus = "zeroexemption";
+                }else if (i == 2 || i == 1){
+                    selectedCivilStatus = "zerodependents";
+                } else if(i == 3){
+                    //one dependent
+                    selectedCivilStatus = "onedependents";
+                } else if(i == 4){
+                    //two dependent
+                    selectedCivilStatus = "twodependents";
+                } else if(i == 5){
+                    //three dependent
+                    selectedCivilStatus = "threedependents";
+                } else if(i == 6){
+                    //four dependent
+                    selectedCivilStatus = "fourdependents";
+                }
+                computeContribution();
                 break;
         }
     }
@@ -208,32 +231,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void computeResult() {
         totalContrib = sssContrib + phContrib + pagibigContrib;
         taxableIncome = grossSalary - totalContrib;
+        Log.d("taxableIncome", String.valueOf(taxableIncome));
+        Double taxPercent = birContrib.getPercentage() * .01;
+        Log.d("taxpercent", String.valueOf(taxPercent));
+        Double temp1 = taxableIncome - birContrib.getSalaryFloor();
+        Log.d("temp1", String.valueOf(temp1));
+        Double temp2 = temp1 * taxPercent;
+        Log.d("temp2", String.valueOf(temp2));
+        withholdingTax = temp2 + birContrib.getExemption();
+        Log.d("withholding", String.valueOf(withholdingTax));
+        netIncome = taxableIncome - withholdingTax;
+        Log.d("netIncome", String.valueOf(netIncome));
         computeTotalAllowance();
         computeTotalMisc();
+
+        Intent intent = new Intent(this, ResultActivity.class);
+        Bundle b = new Bundle();
+        b.putDouble("grosssalary", grossSalary);
+        b.putDouble("taxableincome", taxableIncome);
+        b.putDouble("totalcontribution", totalContrib);
+        b.putDouble("totalallowance", totalAllowance);
+        b.putDouble("totalmisc", totalMisc);
+        b.putDouble("withholding", withholdingTax);
+        b.putDouble("netIncome",netIncome);
+        intent.putExtras(b);
+        startActivity(intent);
+
     }
 
     public void computeContribution() {
-        List<Sss> sssList = Sss.findWithQuery(Sss.class, "select * from sss where salary_range < ? order by id DESC limit 1", String.valueOf(binder.edittextBasicSalary.getText()));
-        List<Philhealth> philhealthList = Philhealth.findWithQuery(Philhealth.class, "select * from philhealth where base_salary < ? order by id DESC limit 1", String.valueOf(binder.edittextBasicSalary.getText()));
+        if (binder.edittextBasicSalary.length() > 4) {
+            String basic_salary = String.valueOf(binder.edittextBasicSalary.getText());
+            List<Sss> sssList = Sss.findWithQuery(Sss.class, "select * from sss where salary_range < ? order by id DESC limit 1", basic_salary);
+            List<Philhealth> philhealthList = Philhealth.findWithQuery(Philhealth.class, "select * from philhealth where base_salary < ? order by id DESC limit 1", basic_salary);
+            List<BirSalaryDeductions> birList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from bir_salary_deductions where salary_ceiling >= ? and salary_floor <= ? and marital_status = ?", basic_salary, basic_salary, selectedCivilStatus);
+            if (sssList != null && philhealthList != null && birList != null){
+                ee = sssList.get(0).geteE();
+                er = sssList.get(0).geteR();
+                sssContrib = binder.spinnerEmploymentStatus.getSelectedItemPosition() == 0 ? ee : er;
+                phContrib = philhealthList.get(0).getShare();
+                birContrib = birList.get(0);
+               // withholdingTax = taxableIncome - birContrib.getSalaryFloor();
+                Log.d("bir", String.valueOf(birList.get(0).getId()));
 
-        ee = sssList.get(0).geteE();
-        er = sssList.get(0).geteR();
-        sssContrib = binder.spinnerEmploymentStatus.getSelectedItemPosition() == 0 ? ee : er;
-        phContrib = philhealthList.get(0).getShare();
-        if (binder.spinnerSalaryPeriod.getSelectedItemPosition() == 1) {
-            binder.textviewSssContrib.setText(String.valueOf(sssContrib));
-            binder.textviewPhilhealthContrib.setText(String.valueOf(phContrib));
-            binder.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
-        } else {
-            binder.textviewSssContrib.setText(String.valueOf(String.valueOf(sssContrib / 2)));
-            binder.textviewPhilhealthContrib.setText(String.valueOf(phContrib / 2));
-            binder.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
+                if (binder.spinnerSalaryPeriod.getSelectedItemPosition() == 1) {
+                    binder.textviewSssContrib.setText(String.valueOf(sssContrib));
+                    binder.textviewPhilhealthContrib.setText(String.valueOf(phContrib));
+                    binder.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
+                } else {
+                    binder.textviewSssContrib.setText(String.valueOf(String.valueOf(sssContrib / 2)));
+                    binder.textviewPhilhealthContrib.setText(String.valueOf(phContrib / 2));
+                    binder.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
+                }
+            } else {
+                Snackbar.make(binder.getRoot(),"Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
+            }
         }
-
     }
 
     public void computeTotalAllowance() {
-
         if (!binder.edittextMeal.getText().toString().isEmpty()) {
             mealAllowance = Double.parseDouble(binder.edittextMeal.getText().toString());
         }
@@ -253,7 +309,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!binder.edittextTaxShielded.getText().toString().isEmpty()) {
             taxShieldedAllowance = Double.parseDouble(binder.edittextTaxShielded.getText().toString());
         }
-
         totalAllowance = mealAllowance + transpoAllowance + colAllowance + otherAllowance + taxShieldedAllowance;
     }
 

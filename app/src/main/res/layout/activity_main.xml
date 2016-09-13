@@ -70,7 +70,7 @@
                         android:layout_below="@id/tv_sss_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="1234"
+                        android:text="0.0"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                         android:layout_below="@id/textview_philhealth_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="1234"
+                        android:text="0.0"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -120,7 +120,7 @@
                         android:layout_below="@id/textview_pagibig_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="1234"
+                        android:text="0.0"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -194,7 +194,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
 
                 <Button
@@ -203,7 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableTint="#555"
-                    android:text="Miscellaneous" />
+                    android:text="Misc (Under Construction)" />
 
                 <LinearLayout
                     android:id="@+id/content_misc"
@@ -211,7 +212,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    >
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -316,7 +318,7 @@
                     style="@style/ButtonHeaderStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Allowance" />
+                    android:text="Allowance (Under Construction)" />
 
                 <LinearLayout
                     android:id="@+id/content_allowance"
