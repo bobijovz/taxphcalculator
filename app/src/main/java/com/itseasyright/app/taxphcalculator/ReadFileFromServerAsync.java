@@ -58,7 +58,7 @@ public class ReadFileFromServerAsync extends AsyncTask<String, Integer, String> 
         String data = "";
         try {
             // Create a URL for the desired page
-            final String PASTEBIN_DATA_URL = "http://pastebin.com/raw/WEcruBTD";
+            final String PASTEBIN_DATA_URL = "https://raw.githubusercontent.com/bobijovz/taxphdata/master/data.txt";
             URL url = new URL(PASTEBIN_DATA_URL);
             // Read all the text returned by the server
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
