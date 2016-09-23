@@ -13,7 +13,6 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.itseasyright.app.taxphcalculator.Entities.BirSalaryDeductions;
 import com.itseasyright.app.taxphcalculator.Entities.Philhealth;
@@ -21,7 +20,9 @@ import com.itseasyright.app.taxphcalculator.Entities.Sss;
 import com.itseasyright.app.taxphcalculator.databinding.ActivityMainBinding;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {
     private ActivityMainBinding binder;
@@ -47,60 +48,138 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Double withholdingTax = 0.0;
     private Double netIncome = 0.0;
     private Double totalMisc = 0.0;
+    private DecimalFormat df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binder = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.getDefault());
+        df = (DecimalFormat) nf;
+        df.applyPattern("###,###,###.00");
+
         salaryPeriodArray = getResources().getStringArray(R.array.string_array_salary_period);
         employmentStatusArray = getResources().getStringArray(R.array.string_array_employment_status);
         civilStatusArray = getResources().getStringArray(R.array.string_array_civil_status);
         binder.btnCalculate.setOnClickListener(this);
         binder.btnReset.setOnClickListener(this);
-        binder.headerBasic.setOnClickListener(this);
-        binder.headerMisc.setOnClickListener(this);
-        binder.headerAllowance.setOnClickListener(this);
-        binder.spinnerCivilStatus.setOnItemSelectedListener(this);
-        binder.spinnerEmploymentStatus.setOnItemSelectedListener(this);
-        binder.spinnerSalaryPeriod.setOnItemSelectedListener(this);
-        binder.edittextBasicSalary.addTextChangedListener(this);
-        collapse(binder.contentMisc);
-        collapse(binder.contentAllowance);
-        expand(binder.contentBasic);
+        binder.basic.headerBasic.setOnClickListener(this);
+        binder.misc1.headerMisc.setOnClickListener(this);
+        binder.misc2.headerDeductions.setOnClickListener(this);
+        binder.allowance.headerAllowance.setOnClickListener(this);
+        binder.basic.spinnerCivilStatus.setOnItemSelectedListener(this);
+        binder.basic.spinnerEmploymentStatus.setOnItemSelectedListener(this);
+        binder.basic.spinnerSalaryPeriod.setOnItemSelectedListener(this);
+        binder.basic.edittextBasicSalary.addTextChangedListener(this);
+        collapse(binder.misc1.contentMisc);
+        collapse(binder.allowance.contentAllowance);
+        expand(binder.basic.contentBasic);
         checkValues();
-        binder.spinnerCivilStatus.setSelection(1);
+        binder.basic.spinnerCivilStatus.setSelection(1);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_calculate:
-                if (binder.edittextBasicSalary.length() > 4) {
+                if (binder.basic.edittextBasicSalary.length() > 4) {
                     computeContribution();
                     computeResult();
                 } else {
-                    Snackbar.make(binder.getRoot(),"Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
                 }
                 break;
             case R.id.btn_reset:
                 resetFields();
                 break;
             case R.id.header_basic:
-                collapse(binder.contentMisc);
-                collapse(binder.contentAllowance);
-                expand(binder.contentBasic);
+                if (binder.basic.contentBasic.getVisibility() == View.GONE) {
+                    expandBasic();
+                } else {
+                    collapseBasic();
+                }
+
                 break;
             case R.id.header_misc:
-                expand(binder.contentMisc);
-                collapse(binder.contentAllowance);
-                collapse(binder.contentBasic);
+                if (binder.misc1.contentMisc.getVisibility() == View.GONE) {
+                    expandMisc();
+                } else {
+                    collapseMisc();
+                }
+
+                break;
+            case R.id.header_deductions:
+                if (binder.misc2.contentDeductions.getVisibility() == View.GONE) {
+                    expandDeduct();
+                } else {
+                    collapseDeduct();
+                }
                 break;
             case R.id.header_allowance:
-                collapse(binder.contentMisc);
-                expand(binder.contentAllowance);
-                collapse(binder.contentBasic);
+                if (binder.allowance.contentAllowance.getVisibility() == View.GONE) {
+                    expandAllowance();
+                } else {
+                    collapseAllowance();
+                }
                 break;
         }
+    }
+
+    public void collapseBasic() {
+        if (binder.basic.edittextBasicSalary.length() > 0) {
+            binder.basic.btnHeaderLabel.setText("BASIC SALARY : ");
+            binder.basic.tvHeaderTotal.setText(df.format(Double.valueOf(binder.basic.edittextBasicSalary.getText().toString())));
+            binder.basic.tvHeaderTotal.setVisibility(View.VISIBLE);
+        }
+        collapse(binder.basic.contentBasic);
+    }
+
+    public void expandBasic() {
+        binder.basic.btnHeaderLabel.setText("BASIC DETAILS");
+        binder.basic.tvHeaderTotal.setVisibility(View.GONE);
+        collapseMisc();
+        collapseDeduct();
+        collapseAllowance();
+        expand(binder.basic.contentBasic);
+    }
+
+    public void collapseMisc() {
+        //binder.misc1.edittextOvertimePay;
+        //binder.misc1.edittextHolidayPay;
+        //binder.misc1.edittextNightDifferential;
+        //TODO compute miscellaneous
+        collapse(binder.misc1.contentMisc);
+    }
+
+    public void expandMisc() {
+        expand(binder.misc1.contentMisc);
+        collapseAllowance();
+        collapseBasic();
+        collapseDeduct();
+    }
+
+    public void collapseDeduct() {
+        //TODO compute deductions
+        collapse(binder.misc2.contentDeductions);
+    }
+
+    public void expandDeduct() {
+        expand(binder.misc2.contentDeductions);
+        collapseAllowance();
+        collapseBasic();
+        collapseMisc();
+    }
+
+    public void collapseAllowance() {
+        //TODO compute allowance
+        collapse(binder.allowance.contentAllowance);
+    }
+
+    public void expandAllowance() {
+        collapseMisc();
+        expand(binder.allowance.contentAllowance);
+        collapseBasic();
+        collapseDeduct();
     }
 
     @Override
@@ -115,17 +194,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void afterTextChanged(Editable editable) {
-        Log.d("you have entered", binder.edittextBasicSalary.getText().toString());
         checkValues();
-        if (binder.edittextBasicSalary.getText().length() == 0) {
-            Toast.makeText(MainActivity.this, "Please indicate Basic Salary.", Toast.LENGTH_SHORT).show();
-            binder.btnCalculate.setEnabled(false);
-            grossSalary = 0.0;
-        } else {
-            grossSalary = Double.parseDouble(binder.edittextBasicSalary.getText().toString());
-            binder.btnCalculate.setEnabled(true);
+        if (editable.length() > 4) {
+            grossSalary = Double.parseDouble(editable.toString());
+            computeContribution();
         }
-        //computeContribution();
     }
 
     @Override
@@ -136,20 +209,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 computeContribution();
                 break;
             case R.id.spinner_civil_status:
-                if(i == 0){
+                if (i == 0) {
                     selectedCivilStatus = "zeroexemption";
-                }else if (i == 2 || i == 1){
+                } else if (i == 2 || i == 1) {
                     selectedCivilStatus = "zerodependents";
-                } else if(i == 3){
+                } else if (i == 3) {
                     //one dependent
                     selectedCivilStatus = "onedependents";
-                } else if(i == 4){
+                } else if (i == 4) {
                     //two dependent
                     selectedCivilStatus = "twodependents";
-                } else if(i == 5){
+                } else if (i == 5) {
                     //three dependent
                     selectedCivilStatus = "threedependents";
-                } else if(i == 6){
+                } else if (i == 6) {
                     //four dependent
                     selectedCivilStatus = "fourdependents";
                 }
@@ -216,14 +289,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void checkValues() {
-        if (binder.edittextBasicSalary.length() == 0) {
-            binder.spinnerCivilStatus.setEnabled(false);
-            binder.spinnerEmploymentStatus.setEnabled(false);
-            binder.spinnerSalaryPeriod.setEnabled(false);
+        if (binder.basic.edittextBasicSalary.length() <= 4) {
+            binder.basic.spinnerCivilStatus.setEnabled(false);
+            binder.basic.spinnerEmploymentStatus.setEnabled(false);
+            binder.basic.spinnerSalaryPeriod.setEnabled(false);
+            binder.basic.edittextBasicSalary.setError("Please input valid basic salary");
+            binder.btnCalculate.setEnabled(false);
+            binder.misc1.headerMisc.setEnabled(false);
+            binder.misc2.headerDeductions.setEnabled(false);
+            binder.allowance.headerAllowance.setEnabled(false);
+            grossSalary = 0.0;
         } else {
-            binder.spinnerCivilStatus.setEnabled(true);
-            binder.spinnerEmploymentStatus.setEnabled(true);
-            binder.spinnerSalaryPeriod.setEnabled(true);
+            binder.basic.edittextBasicSalary.setError(null);
+            binder.basic.spinnerCivilStatus.setEnabled(true);
+            binder.basic.spinnerEmploymentStatus.setEnabled(true);
+            binder.basic.spinnerSalaryPeriod.setEnabled(true);
+            binder.btnCalculate.setEnabled(true);
+            binder.misc1.headerMisc.setEnabled(true);
+            binder.misc2.headerDeductions.setEnabled(true);
+            binder.allowance.headerAllowance.setEnabled(true);
         }
 
     }
@@ -253,61 +337,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         b.putDouble("totalallowance", totalAllowance);
         b.putDouble("totalmisc", totalMisc);
         b.putDouble("withholding", withholdingTax);
-        b.putDouble("netIncome",netIncome);
+        b.putDouble("netIncome", netIncome);
         intent.putExtras(b);
         startActivity(intent);
 
     }
 
     public void computeContribution() {
-        if (binder.edittextBasicSalary.length() > 4) {
-            String basic_salary = String.valueOf(binder.edittextBasicSalary.getText());
+        if (binder.basic.edittextBasicSalary.length() > 4) {
+            String basic_salary = String.valueOf(binder.basic.edittextBasicSalary.getText());
             List<Sss> sssList = Sss.findWithQuery(Sss.class, "select * from sss where salary_range < ? order by id DESC limit 1", basic_salary);
             List<Philhealth> philhealthList = Philhealth.findWithQuery(Philhealth.class, "select * from philhealth where base_salary < ? order by id DESC limit 1", basic_salary);
             List<BirSalaryDeductions> birList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from bir_salary_deductions where salary_ceiling >= ? and salary_floor <= ? and marital_status = ?", basic_salary, basic_salary, selectedCivilStatus);
-            if (sssList != null && philhealthList != null && birList != null){
+            if (sssList != null && philhealthList != null && birList != null) {
                 ee = sssList.get(0).geteE();
                 er = sssList.get(0).geteR();
-                sssContrib = binder.spinnerEmploymentStatus.getSelectedItemPosition() == 0 ? ee : er;
+                sssContrib = binder.basic.spinnerEmploymentStatus.getSelectedItemPosition() == 0 ? ee : er;
                 phContrib = philhealthList.get(0).getShare();
                 birContrib = birList.get(0);
-               // withholdingTax = taxableIncome - birContrib.getSalaryFloor();
+                // withholdingTax = taxableIncome - birContrib.getSalaryFloor();
                 Log.d("bir", String.valueOf(birList.get(0).getId()));
 
-                if (binder.spinnerSalaryPeriod.getSelectedItemPosition() == 1) {
-                    binder.textviewSssContrib.setText(String.valueOf(sssContrib));
-                    binder.textviewPhilhealthContrib.setText(String.valueOf(phContrib));
-                    binder.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
+                if (binder.basic.spinnerSalaryPeriod.getSelectedItemPosition() == 1) {
+                    binder.basic.textviewSssContrib.setText(String.valueOf(sssContrib));
+                    binder.basic.textviewPhilhealthContrib.setText(String.valueOf(phContrib));
+                    binder.basic.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
                 } else {
-                    binder.textviewSssContrib.setText(String.valueOf(String.valueOf(sssContrib / 2)));
-                    binder.textviewPhilhealthContrib.setText(String.valueOf(phContrib / 2));
-                    binder.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
+                    binder.basic.textviewSssContrib.setText(String.valueOf(String.valueOf(sssContrib / 2)));
+                    binder.basic.textviewPhilhealthContrib.setText(String.valueOf(phContrib / 2));
+                    binder.basic.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
                 }
             } else {
-                Snackbar.make(binder.getRoot(),"Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
             }
         }
     }
 
     public void computeTotalAllowance() {
-        if (!binder.edittextMeal.getText().toString().isEmpty()) {
-            mealAllowance = Double.parseDouble(binder.edittextMeal.getText().toString());
+        if (!binder.allowance.edittextMeal.getText().toString().isEmpty()) {
+            mealAllowance = Double.parseDouble(binder.allowance.edittextMeal.getText().toString());
         }
 
-        if (!binder.edittextTransportation.getText().toString().isEmpty()) {
-            transpoAllowance = Double.parseDouble(binder.edittextTransportation.getText().toString());
+        if (!binder.allowance.edittextTransportation.getText().toString().isEmpty()) {
+            transpoAllowance = Double.parseDouble(binder.allowance.edittextTransportation.getText().toString());
         }
 
-        if (!binder.edittextCola.getText().toString().isEmpty()) {
-            colAllowance = Double.parseDouble(binder.edittextCola.getText().toString());
+        if (!binder.allowance.edittextCola.getText().toString().isEmpty()) {
+            colAllowance = Double.parseDouble(binder.allowance.edittextCola.getText().toString());
         }
 
-        if (!binder.edittextOther.getText().toString().isEmpty()) {
-            otherAllowance = Double.parseDouble(binder.edittextOther.getText().toString());
-        }
+     /*   if (!binder.allowance.edittextOther.getText().toString().isEmpty()) {
+            otherAllowance = Double.parseDouble(binder.allowance.edittextOther.getText().toString());
+        }*/
 
-        if (!binder.edittextTaxShielded.getText().toString().isEmpty()) {
-            taxShieldedAllowance = Double.parseDouble(binder.edittextTaxShielded.getText().toString());
+        if (!binder.allowance.edittextTaxShielded.getText().toString().isEmpty()) {
+            taxShieldedAllowance = Double.parseDouble(binder.allowance.edittextTaxShielded.getText().toString());
         }
         totalAllowance = mealAllowance + transpoAllowance + colAllowance + otherAllowance + taxShieldedAllowance;
     }

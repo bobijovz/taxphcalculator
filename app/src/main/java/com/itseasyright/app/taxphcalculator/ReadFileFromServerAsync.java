@@ -176,7 +176,7 @@ public class ReadFileFromServerAsync extends AsyncTask<String, Integer, String> 
                         finalData = tempData[j].split(",");
                         for (int k = 0;k<finalData.length; k++) {
                             finalData1 = finalData[k].split("_");
-                            for (int l = 0;l<finalData1.length; l++) {
+                            for (int l = 0;l<finalData1.length;l++) {
                                 finalData2 = finalData1[l].split("-");
                                 finalData2.toString();
                                 if(l==1){
