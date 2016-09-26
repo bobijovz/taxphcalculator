@@ -13,25 +13,45 @@
             android:orientation="vertical">
 
 
-            <Button
-                android:id="@+id/header_misc"
-                style="@style/ButtonHeaderStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableTint="#555"
-                android:text="Miscellaneous" />
-
             <LinearLayout
+                android:id="@+id/header_misc"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/tv_header_misc_label"
+                    style="@style/ButtonHeaderStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableTint="#555"
+                    android:text="MISCELLANEOUS"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_header_misc_total"
+                    style="@style/ButtonHeaderStyle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="20,000.00"
+                    android:layout_weight="2"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
                 android:id="@+id/content_misc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:visibility="gone">
 
                 <ImageView
+                    android:id="@+id/divider"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#ccc"
@@ -52,42 +72,89 @@
                  </android.support.design.widget.TextInputLayout>-->
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/container_ot"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider">
 
                     <EditText
                         android:id="@+id/edittext_overtime_pay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Overtime Pay"
+                        android:hint="Overtime Pay (Hours)"
                         android:inputType="numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/container_night_diff_rate"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/container_ot"
+                    android:layout_alignParentRight="true">
+
+                    <EditText
+                        android:id="@+id/edittext_night_diff_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Rate (%)"
+                        android:inputType="numberDecimal" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/container_night_diff"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/container_ot"
+                    android:layout_toLeftOf="@id/container_night_diff_rate"
+                    android:layout_marginRight="15dp">
 
                     <EditText
                         android:id="@+id/edittext_night_differential"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Night Differential"
+                        android:hint="Night Diff. (Hours)"
                         android:inputType="numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/label2"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/container_night_diff"
+                    android:text="Holiday Type"
+                    android:textColor="@color/colorAccent"
+                    android:layout_alignParentRight="true"
+                    android:textSize="12sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_holiday_type"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/label2"
+                    android:layout_toLeftOf="@id/textview_sss_contrib"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/string_array_holiday_type"
+                    android:layout_alignParentRight="true"
+                    />
+
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/container_holiday_pay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/container_night_diff"
+                    android:layout_toLeftOf="@id/spinner_holiday_type"
+                    android:layout_marginRight="15dp"
+                    >
 
                     <EditText
                         android:id="@+id/edittext_holiday_pay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Holiday Pay"
+                        android:hint="Holiday Pay (Day Count)"
                         android:inputType="numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

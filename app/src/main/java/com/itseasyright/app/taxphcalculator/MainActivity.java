@@ -1,5 +1,6 @@
 package com.itseasyright.app.taxphcalculator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
@@ -26,29 +28,36 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {
     private ActivityMainBinding binder;
-    private String[] salaryPeriodArray;
-    private String[] employmentStatusArray;
-    private String[] civilStatusArray;
+
     private String selectedCivilStatus = "zeroexemption";
     private BirSalaryDeductions birContrib;
+    private Double grossSalary = 0.0;
+
     private Double sssContrib = 0.0;
     private Double phContrib = 0.0;
     private Double pagibigContrib = 100.0;
-    private Double grossSalary = 0.0;
     private Double totalContrib = 0.0;
+
     private Double totalAllowance = 0.0;
     private Double taxableIncome = 0.0;
-    private Double mealAllowance = 0.0;
-    private Double transpoAllowance = 0.0;
-    private Double colAllowance = 0.0;
-    private Double otherAllowance = 0.0;
-    private Double taxShieldedAllowance = 0.0;
+
+
     private Double ee;
     private Double er;
     private Double withholdingTax = 0.0;
     private Double netIncome = 0.0;
+
     private Double totalMisc = 0.0;
+    private Double otPay = 0.0;
+    private Double nightDiffPay = 0.0;
+    private Double holidayPay = 0.0;
+
+    private Double totalWageDeduct = 0.0;
+
+    private Double dailyRate = 0.0;
     private DecimalFormat df;
+
+    InputMethodManager imm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         df = (DecimalFormat) nf;
         df.applyPattern("###,###,###.00");
 
-        salaryPeriodArray = getResources().getStringArray(R.array.string_array_salary_period);
-        employmentStatusArray = getResources().getStringArray(R.array.string_array_employment_status);
-        civilStatusArray = getResources().getStringArray(R.array.string_array_civil_status);
+        imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+
         binder.btnCalculate.setOnClickListener(this);
         binder.btnReset.setOnClickListener(this);
         binder.basic.headerBasic.setOnClickListener(this);
@@ -70,12 +78,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binder.basic.spinnerCivilStatus.setOnItemSelectedListener(this);
         binder.basic.spinnerEmploymentStatus.setOnItemSelectedListener(this);
         binder.basic.spinnerSalaryPeriod.setOnItemSelectedListener(this);
+        binder.basic.spinnerWorkingDays.setOnItemSelectedListener(this);
         binder.basic.edittextBasicSalary.addTextChangedListener(this);
         collapse(binder.misc1.contentMisc);
         collapse(binder.allowance.contentAllowance);
         expand(binder.basic.contentBasic);
         checkValues();
         binder.basic.spinnerCivilStatus.setSelection(1);
+        grossSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
+
     }
 
     @Override
@@ -127,11 +138,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void collapseBasic() {
         if (binder.basic.edittextBasicSalary.length() > 0) {
-            binder.basic.btnHeaderLabel.setText("BASIC SALARY : ");
+            binder.basic.btnHeaderLabel.setText("BASIC SALARY  : ");
             binder.basic.tvHeaderTotal.setText(df.format(Double.valueOf(binder.basic.edittextBasicSalary.getText().toString())));
             binder.basic.tvHeaderTotal.setVisibility(View.VISIBLE);
+            grossSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
         }
         collapse(binder.basic.contentBasic);
+        imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
     }
 
     public void expandBasic() {
@@ -144,96 +157,88 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void collapseMisc() {
-        //binder.misc1.edittextOvertimePay;
-        //binder.misc1.edittextHolidayPay;
-        //binder.misc1.edittextNightDifferential;
-        //TODO compute miscellaneous
+        Double hourlyRate = dailyRate / 8;
+        Double nightDiffRate = binder.misc1.edittextNightDiffRate.length() > 0 ? Double.valueOf(binder.misc1.edittextNightDiffRate.getText().toString()) : 1.30;
+        Double otHrs = binder.misc1.edittextOvertimePay.getText().length() > 0 ?  Double.valueOf(binder.misc1.edittextOvertimePay.getText().toString()) : 0.0;
+        Double nightDiffHrs = binder.misc1.edittextNightDifferential.getText().length() > 0 ? Double.valueOf(binder.misc1.edittextNightDifferential.getText().toString()) : 0.0;
+        Double holidayCount = binder.misc1.edittextHolidayPay.length() > 0 ? Double.valueOf(binder.misc1.edittextHolidayPay.getText().toString()) : 0.0;
+        Double holidayRate = binder.misc1.spinnerHolidayType.getSelectedItemPosition() == 0 ? 1.0 : 0.30;
+        holidayPay = (holidayCount * dailyRate) * holidayRate;
+        otPay = otHrs * 1.25 * hourlyRate;
+        nightDiffPay = nightDiffHrs * nightDiffRate * hourlyRate ;
+
+        totalMisc = otPay + nightDiffPay + holidayPay;
+        binder.misc1.tvHeaderMiscLabel.setText("MISCELLANEOUS  : ");
+        binder.misc1.tvHeaderMiscTotal.setText(df.format(totalMisc));
+        binder.misc1.tvHeaderMiscTotal.setVisibility(View.VISIBLE);
         collapse(binder.misc1.contentMisc);
+        imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
+
     }
 
     public void expandMisc() {
         expand(binder.misc1.contentMisc);
+        binder.misc1.tvHeaderMiscLabel.setText("MISCELLANEOUS");
+        binder.misc1.tvHeaderMiscTotal.setVisibility(View.GONE);
+
         collapseAllowance();
         collapseBasic();
         collapseDeduct();
     }
 
     public void collapseDeduct() {
-        //TODO compute deductions
+        Integer absentCount = binder.misc2.edittextAbsent.length() > 0 ? Integer.valueOf(binder.misc2.edittextAbsent.getText().toString()) : 0;
+        Double absentDeduct = absentCount * dailyRate;
+        Double tardinessCount = binder.misc2.edittextTardiness.length() > 0 ? Double.valueOf(binder.misc2.edittextTardiness.getText().toString()) : 0;
+        Double tardinessDeduct = (tardinessCount/60) * (dailyRate/8);
+        Log.d("tardiness",tardinessDeduct.toString());
+        Double undertimeCount = binder.misc2.edittextUndertime.length() > 0 ? Double.valueOf(binder.misc2.edittextUndertime.getText().toString()) : 0;
+        Double undertimeDeduct = (undertimeCount/60) * (dailyRate/8);
+        Log.d("undertime",undertimeDeduct.toString());
+        totalWageDeduct = absentDeduct + tardinessDeduct + undertimeDeduct;
+
+        binder.misc2.tvHeaderDeductLabel.setText("DEDUCTIONS  : ");
+        binder.misc2.tvHeaderDeductTotal.setText(df.format(totalWageDeduct));
+        binder.misc2.tvHeaderDeductTotal.setVisibility(View.VISIBLE);
         collapse(binder.misc2.contentDeductions);
+        imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
+
     }
 
     public void expandDeduct() {
         expand(binder.misc2.contentDeductions);
+        binder.misc2.tvHeaderDeductLabel.setText("WAGE DEDUCTIONS");
+        binder.misc2.tvHeaderDeductTotal.setVisibility(View.GONE);
+
         collapseAllowance();
         collapseBasic();
         collapseMisc();
     }
 
     public void collapseAllowance() {
-        //TODO compute allowance
+        Double mealAllowance = binder.allowance.edittextMeal.length() > 0 ? Double.valueOf(binder.allowance.edittextMeal.getText().toString()) : 0;
+        Double transpoAllowance = binder.allowance.edittextTransportation.length() > 0 ? Double.valueOf(binder.allowance.edittextTransportation.getText().toString()) : 0;
+        Double cola = binder.allowance.edittextCola.length() > 0 ? Double.valueOf(binder.allowance.edittextCola.getText().toString()) : 0;
+        Double taxShield = binder.allowance.edittextTaxShielded.length() > 0 ? Double.valueOf(binder.allowance.edittextTaxShielded.getText().toString()) : 0;
+
+        totalAllowance = mealAllowance + transpoAllowance + cola + taxShield;
+
+        binder.allowance.tvHeaderAllowanceLabel.setText("ALLOWANCE  : ");
+        binder.allowance.tvHeaderAllowanceTotal.setText(df.format(totalAllowance));
+        binder.allowance.tvHeaderAllowanceTotal.setVisibility(View.VISIBLE);
         collapse(binder.allowance.contentAllowance);
+        imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
+
     }
 
     public void expandAllowance() {
+        binder.allowance.tvHeaderAllowanceLabel.setText("ALLOWANCE");
+        binder.allowance.tvHeaderAllowanceTotal.setVisibility(View.GONE);
+
         collapseMisc();
         expand(binder.allowance.contentAllowance);
         collapseBasic();
         collapseDeduct();
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-        checkValues();
-        if (editable.length() > 4) {
-            grossSalary = Double.parseDouble(editable.toString());
-            computeContribution();
-        }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (adapterView.getId()) {
-            case R.id.spinner_salary_period:
-            case R.id.spinner_employment_status:
-                computeContribution();
-                break;
-            case R.id.spinner_civil_status:
-                if (i == 0) {
-                    selectedCivilStatus = "zeroexemption";
-                } else if (i == 2 || i == 1) {
-                    selectedCivilStatus = "zerodependents";
-                } else if (i == 3) {
-                    //one dependent
-                    selectedCivilStatus = "onedependents";
-                } else if (i == 4) {
-                    //two dependent
-                    selectedCivilStatus = "twodependents";
-                } else if (i == 5) {
-                    //three dependent
-                    selectedCivilStatus = "threedependents";
-                } else if (i == 6) {
-                    //four dependent
-                    selectedCivilStatus = "fourdependents";
-                }
-                computeContribution();
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     public static void expand(final View v) {
@@ -298,6 +303,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binder.misc1.headerMisc.setEnabled(false);
             binder.misc2.headerDeductions.setEnabled(false);
             binder.allowance.headerAllowance.setEnabled(false);
+            binder.basic.spinnerWorkingDays.setEnabled(false);
             grossSalary = 0.0;
         } else {
             binder.basic.edittextBasicSalary.setError(null);
@@ -308,6 +314,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binder.misc1.headerMisc.setEnabled(true);
             binder.misc2.headerDeductions.setEnabled(true);
             binder.allowance.headerAllowance.setEnabled(true);
+            binder.basic.spinnerWorkingDays.setEnabled(true);
         }
 
     }
@@ -326,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("withholding", String.valueOf(withholdingTax));
         netIncome = taxableIncome - withholdingTax;
         Log.d("netIncome", String.valueOf(netIncome));
-        computeTotalAllowance();
+
         computeTotalMisc();
 
         Intent intent = new Intent(this, ResultActivity.class);
@@ -349,6 +356,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             List<Sss> sssList = Sss.findWithQuery(Sss.class, "select * from sss where salary_range < ? order by id DESC limit 1", basic_salary);
             List<Philhealth> philhealthList = Philhealth.findWithQuery(Philhealth.class, "select * from philhealth where base_salary < ? order by id DESC limit 1", basic_salary);
             List<BirSalaryDeductions> birList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from bir_salary_deductions where salary_ceiling >= ? and salary_floor <= ? and marital_status = ?", basic_salary, basic_salary, selectedCivilStatus);
+            if (binder.basic.spinnerWorkingDays.getSelectedItemPosition() == 0){
+                dailyRate = (grossSalary * 12)/261;
+            } else {
+                dailyRate = (grossSalary * 12)/313;
+            }
+            binder.basic.textviewDailyRate.setText(df.format(dailyRate));
             if (sssList != null && philhealthList != null && birList != null) {
                 ee = sssList.get(0).geteE();
                 er = sssList.get(0).geteR();
@@ -359,41 +372,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("bir", String.valueOf(birList.get(0).getId()));
 
                 if (binder.basic.spinnerSalaryPeriod.getSelectedItemPosition() == 1) {
-                    binder.basic.textviewSssContrib.setText(String.valueOf(sssContrib));
-                    binder.basic.textviewPhilhealthContrib.setText(String.valueOf(phContrib));
-                    binder.basic.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
+                    binder.basic.textviewSssContrib.setText(df.format(sssContrib));
+                    binder.basic.textviewPhilhealthContrib.setText(df.format(phContrib));
+                    binder.basic.textviewPagibigContrib.setText(df.format(pagibigContrib));
                 } else {
-                    binder.basic.textviewSssContrib.setText(String.valueOf(String.valueOf(sssContrib / 2)));
-                    binder.basic.textviewPhilhealthContrib.setText(String.valueOf(phContrib / 2));
-                    binder.basic.textviewPagibigContrib.setText(String.valueOf(pagibigContrib));
+                    binder.basic.textviewSssContrib.setText(df.format(sssContrib / 2));
+                    binder.basic.textviewPhilhealthContrib.setText(df.format(phContrib / 2));
+                    binder.basic.textviewPagibigContrib.setText(df.format(pagibigContrib));
                 }
             } else {
                 Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
             }
         }
-    }
-
-    public void computeTotalAllowance() {
-        if (!binder.allowance.edittextMeal.getText().toString().isEmpty()) {
-            mealAllowance = Double.parseDouble(binder.allowance.edittextMeal.getText().toString());
-        }
-
-        if (!binder.allowance.edittextTransportation.getText().toString().isEmpty()) {
-            transpoAllowance = Double.parseDouble(binder.allowance.edittextTransportation.getText().toString());
-        }
-
-        if (!binder.allowance.edittextCola.getText().toString().isEmpty()) {
-            colAllowance = Double.parseDouble(binder.allowance.edittextCola.getText().toString());
-        }
-
-     /*   if (!binder.allowance.edittextOther.getText().toString().isEmpty()) {
-            otherAllowance = Double.parseDouble(binder.allowance.edittextOther.getText().toString());
-        }*/
-
-        if (!binder.allowance.edittextTaxShielded.getText().toString().isEmpty()) {
-            taxShieldedAllowance = Double.parseDouble(binder.allowance.edittextTaxShielded.getText().toString());
-        }
-        totalAllowance = mealAllowance + transpoAllowance + colAllowance + otherAllowance + taxShieldedAllowance;
     }
 
     public void computeTotalMisc() {
@@ -410,5 +400,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        binder.edittextCola.setText(String.valueOf(colAllowance));
 //        binder.edittextOther.setText(String.valueOf(otherAllowance));
 //        binder.edittextTaxShielded.setText(String.valueOf(taxShieldedAllowance));
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        checkValues();
+        if (editable.length() > 4) {
+            grossSalary = Double.parseDouble(editable.toString());
+            computeContribution();
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (adapterView.getId()) {
+            case R.id.spinner_salary_period:
+            case R.id.spinner_employment_status:
+            case R.id.spinner_working_days:
+                computeContribution();
+                break;
+            case R.id.spinner_civil_status:
+                if (i == 0) {
+                    selectedCivilStatus = "zeroexemption";
+                } else if (i == 2 || i == 1) {
+                    selectedCivilStatus = "zerodependents";
+                } else if (i == 3) {
+                    //one dependent
+                    selectedCivilStatus = "onedependents";
+                } else if (i == 4) {
+                    //two dependent
+                    selectedCivilStatus = "twodependents";
+                } else if (i == 5) {
+                    //three dependent
+                    selectedCivilStatus = "threedependents";
+                } else if (i == 6) {
+                    //four dependent
+                    selectedCivilStatus = "fourdependents";
+                }
+                computeContribution();
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

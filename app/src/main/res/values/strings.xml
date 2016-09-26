@@ -29,4 +29,14 @@
         <item>4 Dependents</item>
     </string-array>
 
+    <string-array name="string_array_holiday_type">
+        <item>Regular Holiday</item>
+        <item>Special Holiday</item>
+    </string-array>
+
+    <string-array name="string_array_working_days">
+        <item>5 days a week</item>
+        <item>6 days a week</item>
+    </string-array>
+
 </resources>

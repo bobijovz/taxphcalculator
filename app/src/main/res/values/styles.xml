@@ -15,7 +15,7 @@
 
     <style name="ButtonHeaderStyle">
         <item name="android:background">@drawable/background_rounded_top</item>
-        <item name="android:drawableLeft">@drawable/ic_edit_black_24dp</item>
+        <item name="android:drawableLeft">@drawable/ic_keyboard_arrow_down_black_24dp</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
