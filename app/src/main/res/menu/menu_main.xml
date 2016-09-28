@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_action_restart_96"
         android:orderInCategory="100"
         android:title="Clear All"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_action_restart_96"/>
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_calculate"
+        android:icon="@drawable/ic_action_calculator_96"
         android:orderInCategory="100"
         android:title="Calculate"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_action_calculator_96"/>
+        app:showAsAction="always" />
 </menu>
