@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Double totalAllowance = 0.0;
     private Double taxableIncome = 0.0;
 
+    private Double totalCalculation = 0.0;
 
     private Double ee;
     private Double er;
@@ -69,12 +72,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        binder.btnCalculate.setOnClickListener(this);
-        binder.btnReset.setOnClickListener(this);
         binder.basic.headerBasic.setOnClickListener(this);
         binder.misc1.headerMisc.setOnClickListener(this);
         binder.misc2.headerDeductions.setOnClickListener(this);
         binder.allowance.headerAllowance.setOnClickListener(this);
+        binder.calculations.headerCalculations.setOnClickListener(this);
         binder.basic.spinnerCivilStatus.setOnItemSelectedListener(this);
         binder.basic.spinnerEmploymentStatus.setOnItemSelectedListener(this);
         binder.basic.spinnerSalaryPeriod.setOnItemSelectedListener(this);
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binder.basic.edittextBasicSalary.addTextChangedListener(this);
         collapse(binder.misc1.contentMisc);
         collapse(binder.allowance.contentAllowance);
+        binder.calculations.containerCalculations.setVisibility(View.GONE);
         expand(binder.basic.contentBasic);
         checkValues();
         binder.basic.spinnerCivilStatus.setSelection(1);
@@ -90,19 +93,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_refresh) {
+            binder.calculations.containerCalculations.setVisibility(View.GONE);
+            resetFields();
+            return true;
+        } else if (id == R.id.action_calculate) {
+            binder.calculations.containerCalculations.setVisibility(View.VISIBLE);
+            expandCalculations();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_calculate:
-                if (binder.basic.edittextBasicSalary.length() > 4) {
-                    computeContribution();
-                    computeResult();
-                } else {
-                    Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
-                }
-                break;
-            case R.id.btn_reset:
-                resetFields();
-                break;
+//            case R.id.btn_calculate:
+//                if (binder.basic.edittextBasicSalary.length() > 4) {
+//                    computeContribution();
+//                    computeResult();
+//                } else {
+//                    Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
+//                }
+//                break;
+//            case R.id.btn_reset:
+//                resetFields();
+//                break;
             case R.id.header_basic:
                 if (binder.basic.contentBasic.getVisibility() == View.GONE) {
                     expandBasic();
@@ -133,6 +157,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     collapseAllowance();
                 }
                 break;
+
+            case R.id.header_calculations:
+                if(binder.calculations.contentCalculations.getVisibility() == View.GONE){
+                    expandCalculations();
+                }
+                else{
+                    collapseCalculations();
+                }
+                break;
         }
     }
 
@@ -154,6 +187,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseDeduct();
         collapseAllowance();
         expand(binder.basic.contentBasic);
+        binder.calculations.containerCalculations.setVisibility(View.GONE);
+
+
     }
 
     public void collapseMisc() {
@@ -184,6 +220,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseAllowance();
         collapseBasic();
         collapseDeduct();
+        binder.calculations.containerCalculations.setVisibility(View.GONE);
+
     }
 
     public void collapseDeduct() {
@@ -213,6 +251,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseAllowance();
         collapseBasic();
         collapseMisc();
+        binder.calculations.containerCalculations.setVisibility(View.GONE);
+
     }
 
     public void collapseAllowance() {
@@ -239,6 +279,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         expand(binder.allowance.contentAllowance);
         collapseBasic();
         collapseDeduct();
+        binder.calculations.containerCalculations.setVisibility(View.GONE);
+
+    }
+
+    public void collapseCalculations(){
+        binder.calculations.tvHeaderCalculationsLabel.setText("CALCULATIONS  : ");
+        binder.calculations.tvHeaderCalculationsTotal.setText(df.format(totalCalculation));
+        binder.calculations.tvHeaderCalculationsTotal.setVisibility(View.VISIBLE);
+        collapse(binder.calculations.contentCalculations);
+        imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
+    }
+
+    public void expandCalculations()
+    {
+        binder.calculations.tvHeaderCalculationsLabel.setText("CALCULATIONS");
+        binder.calculations.tvHeaderCalculationsTotal.setVisibility(View.GONE);
+
+        collapseAllowance();
+        expand(binder.calculations.contentCalculations);
+        collapseMisc();
+        collapseBasic();
+        collapseDeduct();
+        collapseBasic();
     }
 
     public static void expand(final View v) {
@@ -299,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binder.basic.spinnerEmploymentStatus.setEnabled(false);
             binder.basic.spinnerSalaryPeriod.setEnabled(false);
             binder.basic.edittextBasicSalary.setError("Please input valid basic salary");
-            binder.btnCalculate.setEnabled(false);
+//            binder.btnCalculate.setEnabled(false);
             binder.misc1.headerMisc.setEnabled(false);
             binder.misc2.headerDeductions.setEnabled(false);
             binder.allowance.headerAllowance.setEnabled(false);
@@ -310,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binder.basic.spinnerCivilStatus.setEnabled(true);
             binder.basic.spinnerEmploymentStatus.setEnabled(true);
             binder.basic.spinnerSalaryPeriod.setEnabled(true);
-            binder.btnCalculate.setEnabled(true);
+//            binder.btnCalculate.setEnabled(true);
             binder.misc1.headerMisc.setEnabled(true);
             binder.misc2.headerDeductions.setEnabled(true);
             binder.allowance.headerAllowance.setEnabled(true);
