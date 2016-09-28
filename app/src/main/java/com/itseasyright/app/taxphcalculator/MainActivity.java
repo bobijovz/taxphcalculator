@@ -386,7 +386,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public static void expand(final View v) {
+    public void expand(final View v) {
         v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         final int targetHeight = v.getMeasuredHeight();
 
@@ -410,6 +410,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // 1dp/ms
         a.setDuration((int) (targetHeight / v.getContext().getResources().getDisplayMetrics().density));
+        a.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                binder.scrollview.fullScroll(View.FOCUS_DOWN);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         v.startAnimation(a);
     }
 
@@ -436,6 +452,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 1dp/ms
         a.setDuration((int) (initialHeight / v.getContext().getResources().getDisplayMetrics().density));
         v.startAnimation(a);
+
     }
 
     public void checkValues() {
