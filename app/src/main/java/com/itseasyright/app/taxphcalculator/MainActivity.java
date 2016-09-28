@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String selectedCivilStatus = "zeroexemption";
     private BirSalaryDeductions birContrib;
-    private Double grossSalary = 0.0;
+    private Double basicSalary = 0.0;
+    private Double grossSalaryDeducted = 0.0;
+
 
     private Double sssContrib = 0.0;
     private Double phContrib = 0.0;
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         expand(binder.basic.contentBasic);
         checkValues();
         binder.basic.spinnerCivilStatus.setSelection(1);
-        grossSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
+        basicSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
 
     }
 
@@ -107,10 +109,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             resetFields();
             return true;
         } else if (id == R.id.action_calculate) {
-            binder.calculations.containerCalculations.setVisibility(View.VISIBLE);
-            expandCalculations();
+
+            if (binder.basic.edittextBasicSalary.length() > 4) {
+                binder.calculations.containerCalculations.setVisibility(View.VISIBLE);
+                expandCalculations();
+                computeContribution();
+                computeResult();
+
+            } else {
+                Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
+            }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void computeResult() {
+
+        grossSalaryDeducted = (basicSalary + totalMisc) - totalWageDeduct;
+        totalContrib = sssContrib + phContrib + pagibigContrib;
+        taxableIncome = basicSalary - totalContrib;
+        Double taxPercent = birContrib.getPercentage() * .01;
+        Double temp1 = taxableIncome - birContrib.getSalaryFloor();
+        Double temp2 = temp1 * taxPercent;
+        withholdingTax = temp2 + birContrib.getExemption();
+        netIncome = taxableIncome - withholdingTax;
+
+
+//        basicSalary
+//        totalMisc
+//        totalWageDeduct
+//        grossSalaryDeducted
+//        withholdingTax
+//        sssContrib
+//        phContrib
+//        pagibigContrib
+//        totalAllowance
+//        netIncome
+//
+
+
+
+//        Intent intent = new Intent(this, ResultActivity.class);
+//        Bundle b = new Bundle();
+//        b.putDouble("grosssalary", basicSalary);
+//        b.putDouble("taxableincome", taxableIncome);
+//        b.putDouble("totalcontribution", totalContrib);
+//        b.putDouble("totalallowance", totalAllowance);
+//        b.putDouble("totalmisc", totalMisc);
+//        b.putDouble("withholding", withholdingTax);
+//        b.putDouble("netIncome", netIncome);
+//        intent.putExtras(b);
+//        startActivity(intent);
+
     }
 
     @Override
@@ -174,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binder.basic.btnHeaderLabel.setText("BASIC SALARY  : ");
             binder.basic.tvHeaderTotal.setText(df.format(Double.valueOf(binder.basic.edittextBasicSalary.getText().toString())));
             binder.basic.tvHeaderTotal.setVisibility(View.VISIBLE);
-            grossSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
+            basicSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
         }
         collapse(binder.basic.contentBasic);
         imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
@@ -367,7 +417,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binder.misc2.headerDeductions.setEnabled(false);
             binder.allowance.headerAllowance.setEnabled(false);
             binder.basic.spinnerWorkingDays.setEnabled(false);
-            grossSalary = 0.0;
+            basicSalary = 0.0;
         } else {
             binder.basic.edittextBasicSalary.setError(null);
             binder.basic.spinnerCivilStatus.setEnabled(true);
@@ -382,36 +432,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void computeResult() {
-        totalContrib = sssContrib + phContrib + pagibigContrib;
-        taxableIncome = grossSalary - totalContrib;
-        Log.d("taxableIncome", String.valueOf(taxableIncome));
-        Double taxPercent = birContrib.getPercentage() * .01;
-        Log.d("taxpercent", String.valueOf(taxPercent));
-        Double temp1 = taxableIncome - birContrib.getSalaryFloor();
-        Log.d("temp1", String.valueOf(temp1));
-        Double temp2 = temp1 * taxPercent;
-        Log.d("temp2", String.valueOf(temp2));
-        withholdingTax = temp2 + birContrib.getExemption();
-        Log.d("withholding", String.valueOf(withholdingTax));
-        netIncome = taxableIncome - withholdingTax;
-        Log.d("netIncome", String.valueOf(netIncome));
 
-        computeTotalMisc();
-
-        Intent intent = new Intent(this, ResultActivity.class);
-        Bundle b = new Bundle();
-        b.putDouble("grosssalary", grossSalary);
-        b.putDouble("taxableincome", taxableIncome);
-        b.putDouble("totalcontribution", totalContrib);
-        b.putDouble("totalallowance", totalAllowance);
-        b.putDouble("totalmisc", totalMisc);
-        b.putDouble("withholding", withholdingTax);
-        b.putDouble("netIncome", netIncome);
-        intent.putExtras(b);
-        startActivity(intent);
-
-    }
 
     public void computeContribution() {
         if (binder.basic.edittextBasicSalary.length() > 4) {
@@ -420,9 +441,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             List<Philhealth> philhealthList = Philhealth.findWithQuery(Philhealth.class, "select * from philhealth where base_salary < ? order by id DESC limit 1", basic_salary);
             List<BirSalaryDeductions> birList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from bir_salary_deductions where salary_ceiling >= ? and salary_floor <= ? and marital_status = ?", basic_salary, basic_salary, selectedCivilStatus);
             if (binder.basic.spinnerWorkingDays.getSelectedItemPosition() == 0){
-                dailyRate = (grossSalary * 12)/261;
+                dailyRate = (basicSalary * 12)/261;
             } else {
-                dailyRate = (grossSalary * 12)/313;
+                dailyRate = (basicSalary * 12)/313;
             }
             binder.basic.textviewDailyRate.setText(df.format(dailyRate));
             if (sssList != null && philhealthList != null && birList != null) {
@@ -449,9 +470,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void computeTotalMisc() {
-
-    }
 
     public void resetFields() {
 //        binder.edittextBasicSalary.setText("0.0");
@@ -479,7 +497,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void afterTextChanged(Editable editable) {
         checkValues();
         if (editable.length() > 4) {
-            grossSalary = Double.parseDouble(editable.toString());
+            basicSalary = Double.parseDouble(editable.toString());
             computeContribution();
         }
     }
