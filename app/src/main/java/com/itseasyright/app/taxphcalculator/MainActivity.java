@@ -1,10 +1,11 @@
 package com.itseasyright.app.taxphcalculator;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         grossSalaryDeducted = (basicSalary + totalMisc) - totalWageDeduct;
         totalContrib = sssContrib + phContrib + pagibigContrib;
-        taxableIncome = basicSalary - totalContrib;
+        taxableIncome = grossSalaryDeducted - totalContrib;
         Double taxPercent = birContrib.getPercentage() * .01;
         Double temp1 = taxableIncome - birContrib.getSalaryFloor();
         Double temp2 = temp1 * taxPercent;
@@ -147,6 +148,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        netIncome
 //
 
+        binder.calculations.tvCalculationBasicSalary.setText(df.format(basicSalary));
+        binder.calculations.tvCalculationTotalMisc.setText(df.format(totalMisc));
+        binder.calculations.tvCalculationWageDeduction.setText(df.format(totalWageDeduct));
+        binder.calculations.tvCalculationGrossSalary.setText(df.format(grossSalaryDeducted));
+        binder.calculations.tvCalculationTax.setText(df.format(withholdingTax));
+        binder.calculations.tvCalculationSss.setText(df.format(sssContrib));
+        binder.calculations.tvCalculationPhil.setText(df.format(phContrib));
+        binder.calculations.tvCalculationPagibig.setText(df.format(pagibigContrib));
+        binder.calculations.tvCalculationAllowance.setText(df.format(totalAllowance));
+        binder.calculations.tvCalculationNetPay.setText(df.format(netIncome));
+
 
 
 //        Intent intent = new Intent(this, ResultActivity.class);
@@ -161,6 +173,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        intent.putExtras(b);
 //        startActivity(intent);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Confirmation")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                     finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
     }
 
     @Override
@@ -209,12 +240,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.header_calculations:
-                if(binder.calculations.contentCalculations.getVisibility() == View.GONE){
+//                if(binder.calculations.contentCalculations.getVisibility() == View.GONE){
                     expandCalculations();
-                }
-                else{
-                    collapseCalculations();
-                }
+//                }
+//                else{
+//                    collapseCalculations();
+//                }
                 break;
         }
     }
@@ -352,6 +383,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseBasic();
         collapseDeduct();
         collapseBasic();
+
     }
 
     public static void expand(final View v) {
@@ -438,7 +470,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (binder.basic.edittextBasicSalary.length() > 4) {
             String basic_salary = String.valueOf(binder.basic.edittextBasicSalary.getText());
             List<Sss> sssList = Sss.findWithQuery(Sss.class, "select * from sss where salary_range < ? order by id DESC limit 1", basic_salary);
-            List<Philhealth> philhealthList = Philhealth.findWithQuery(Philhealth.class, "select * from philhealth where base_salary < ? order by id DESC limit 1", basic_salary);
+            List<Philhealth> philhealthList = Philhealth.findWithQuery(Philhealth.class, "select * from philhealth where base_salary <= ? order by id DESC limit 1", basic_salary);
             List<BirSalaryDeductions> birList = BirSalaryDeductions.findWithQuery(BirSalaryDeductions.class, "select * from bir_salary_deductions where salary_ceiling >= ? and salary_floor <= ? and marital_status = ?", basic_salary, basic_salary, selectedCivilStatus);
             if (binder.basic.spinnerWorkingDays.getSelectedItemPosition() == 0){
                 dailyRate = (basicSalary * 12)/261;

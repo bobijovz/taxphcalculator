@@ -45,12 +45,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/divider0"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginBottom="10dp"
@@ -63,14 +64,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
+                    android:layout_below="@+id/divider0"
+
+                    android:layout_marginBottom="3dp"
                     android:text="Basic Salary:" />
 
                 <TextView
                     android:id="@+id/tv_calculation_basic_salary"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_toLeftOf="@id/tv_calculation_basic_salary_label"
+                    android:layout_below="@+id/divider0"
+                    android:layout_toLeftOf="@+id/tv_calculation_basic_salary_label"
+                    android:gravity="right"
                     android:text="0000" />
 
                 <TextView
@@ -78,16 +84,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
+
                     android:layout_below="@+id/tv_calculation_basic_salary_label"
+                    android:layout_marginBottom="3dp"
                     android:text="Total Miscellaneous:" />
 
                 <TextView
                     android:id="@+id/tv_calculation_total_misc"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/tv_calculation_basic_salary"
-                    android:layout_toLeftOf="@id/tv_calculation_total_misc_label"
+                    android:layout_toLeftOf="@+id/tv_calculation_total_misc_label"
+                    android:drawableLeft="@drawable/ic_add_black_18dp"
+                    android:drawableTint="#888"
+                    android:gravity="right"
                     android:text="0000" />
 
                 <TextView
@@ -96,27 +107,30 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_calculation_total_misc_label"
-                    android:text="Wage deduction:" />
+                    android:text="Wage Deduction:" />
 
                 <TextView
                     android:id="@+id/tv_calculation_wage_deduction"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/tv_calculation_total_misc"
-                    android:layout_toLeftOf="@id/tv_calculation_wage_deduction_label"
+                    android:layout_below="@+id/tv_calculation_total_misc_label"
+                    android:layout_toLeftOf="@+id/tv_calculation_wage_deduction_label"
+                    android:drawableLeft="@drawable/ic_remove_black_18dp"
+                    android:drawableTint="#888"
+                    android:gravity="right"
                     android:text="0000" />
 
                 <ImageView
                     android:id="@+id/divider1"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#ccc"
-                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_calculation_wage_deduction"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_below="@id/tv_calculation_wage_deduction"/>
+                    android:layout_marginTop="10dp"
+                    android:background="#ccc" />
 
                 <TextView
                     android:id="@+id/tv_calculation_gross_salary_label"
@@ -124,27 +138,30 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/divider1"
-                    android:text="Gross Pay:" />
+                    android:text="Gross Pay:"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_calculation_gross_salary"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/divider1"
-                    android:layout_toLeftOf="@id/tv_calculation_wage_deduction_label"
-                    android:text="0000" />
+                    android:layout_toLeftOf="@+id/tv_calculation_wage_deduction_label"
+                    android:gravity="right"
+                    android:text="0000"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/divider2"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#ccc"
-                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_calculation_gross_salary"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_below="@id/tv_calculation_gross_salary"/>
+                    android:layout_marginTop="10dp"
+                    android:background="#ccc" />
 
                 <TextView
                     android:id="@+id/tv_calculation_tax_label"
@@ -152,15 +169,19 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/divider2"
+                    android:layout_marginBottom="3dp"
                     android:text="Withholding Tax:" />
 
                 <TextView
                     android:id="@+id/tv_calculation_tax"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/divider2"
-                    android:layout_toLeftOf="@id/tv_calculation_tax_label"
+                    android:layout_toLeftOf="@+id/tv_calculation_tax_label"
+                    android:drawableLeft="@drawable/ic_remove_black_18dp"
+                    android:drawableTint="#888"
+                    android:gravity="right"
                     android:text="0000" />
 
                 <TextView
@@ -169,15 +190,20 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_calculation_tax_label"
+                    android:layout_marginBottom="3dp"
                     android:text="SSS Contribution:" />
 
                 <TextView
                     android:id="@+id/tv_calculation_sss"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/tv_calculation_tax"
-                    android:layout_toLeftOf="@id/tv_calculation_sss_label"
+                    android:layout_toLeftOf="@+id/tv_calculation_sss_label"
+                    android:drawableLeft="@drawable/ic_remove_black_18dp"
+
+                    android:drawableTint="#888"
+                    android:gravity="right"
                     android:text="0000" />
 
                 <TextView
@@ -186,15 +212,19 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_calculation_sss_label"
+                    android:layout_marginBottom="3dp"
                     android:text="PhilHealth Contribution:" />
 
                 <TextView
                     android:id="@+id/tv_calculation_phil"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/tv_calculation_sss"
-                    android:layout_toLeftOf="@id/tv_calculation_phil_label"
+                    android:layout_toLeftOf="@+id/tv_calculation_phil_label"
+                    android:drawableLeft="@drawable/ic_remove_black_18dp"
+                    android:drawableTint="#888"
+                    android:gravity="right"
                     android:text="0000" />
 
                 <TextView
@@ -203,55 +233,53 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_calculation_phil_label"
-                    android:text="Pagibig Contribution:" />
+                    android:text="PAGIBIG Contribution:" />
 
                 <TextView
                     android:id="@+id/tv_calculation_Pagibig"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/tv_calculation_phil"
-                    android:layout_toLeftOf="@id/tv_calculation_Pagibig_label"
+                    android:layout_toLeftOf="@+id/tv_calculation_Pagibig_label"
+                    android:drawableLeft="@drawable/ic_remove_black_18dp"
+                    android:drawableTint="#888"
+                    android:gravity="right"
                     android:text="0000" />
 
                 <ImageView
                     android:id="@+id/divider3"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#ccc"
-                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_calculation_Pagibig"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_below="@id/tv_calculation_Pagibig"/>
-
-                <TextView
-                    android:id="@+id/tv_calculation_allowance_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/divider3"
-                    android:text="Total Allowance:" />
+                    android:layout_marginTop="10dp"
+                    android:background="#ccc" />
 
                 <TextView
                     android:id="@+id/tv_calculation_allowance"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/divider3"
-                    android:layout_toLeftOf="@id/tv_calculation_allowance_label"
+                    android:layout_toLeftOf="@+id/tv_calculation_allowance_label"
+                    android:drawableLeft="@drawable/ic_add_black_18dp"
+                    android:drawableTint="#888"
+                    android:gravity="right"
                     android:text="0000" />
 
                 <ImageView
                     android:id="@+id/divider4"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#ccc"
-                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_calculation_allowance"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_below="@id/tv_calculation_allowance"/>
+                    android:layout_marginTop="10dp"
+                    android:background="#ccc" />
 
                 <TextView
                     android:id="@+id/tv_calculation_net_pay_label"
@@ -259,16 +287,29 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/divider4"
-                    android:text="Net Pay:" />
+                    android:text="Net Pay:"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_calculation_net_pay"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/divider4"
-                    android:layout_toLeftOf="@id/tv_calculation_net_pay_label"
-                    android:text="0000" />
+                    android:layout_toLeftOf="@+id/tv_calculation_net_pay_label"
+                    android:gravity="right"
+                    android:text="0000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_calculation_allowance_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_calculation_allowance"
+                    android:layout_alignBottom="@+id/tv_calculation_allowance"
+                    android:layout_alignParentStart="true"
+                    android:text="Total Allowance:" />
+
 
             </RelativeLayout>
         </LinearLayout>
