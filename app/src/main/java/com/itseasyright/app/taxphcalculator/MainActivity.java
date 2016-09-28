@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseAllowance();
         expand(binder.basic.contentBasic);
         binder.calculations.containerCalculations.setVisibility(View.GONE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
     }
 
     public void collapseMisc() {
@@ -245,6 +246,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseBasic();
         collapseDeduct();
         binder.calculations.containerCalculations.setVisibility(View.GONE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+
     }
 
     public void collapseDeduct() {
@@ -271,6 +274,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseBasic();
         collapseMisc();
         binder.calculations.containerCalculations.setVisibility(View.GONE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+
     }
 
     public void collapseAllowance() {
@@ -295,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseBasic();
         collapseDeduct();
         binder.calculations.containerCalculations.setVisibility(View.GONE);
-
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
     }
 
     public void collapseCalculations() {
@@ -350,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                binder.scrollview.fullScroll(View.FOCUS_DOWN);
+                binder.scrollview.scrollTo(0, v.getTop());
             }
 
             @Override
