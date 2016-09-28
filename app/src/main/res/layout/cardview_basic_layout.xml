@@ -89,7 +89,7 @@
                 <TextView
                     android:id="@+id/textview_sss_contrib"
                     android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_above="@+id/textview_philhealth_label"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/tv_sss_label"
@@ -114,7 +114,7 @@
                 <TextView
                     android:id="@+id/textview_philhealth_contrib"
                     android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_above="@+id/textview_pagibig_label"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/textview_philhealth_label"
@@ -139,7 +139,7 @@
                 <TextView
                     android:id="@+id/textview_pagibig_contrib"
                     android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/spinner_civil_status"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/textview_pagibig_label"
