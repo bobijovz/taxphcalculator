@@ -1,5 +1,46 @@
 <resources>
     <string name="app_name">TaxPh Calculator</string>
+    <string name="text_header_misc">MISCELLANEOUS</string>
+    <string name="default_total_value">--</string>
+    <string name="description_image_divider">image_divider</string>
+    <string name="hint_overtime_pay">Overtime Pay (Hours)</string>
+    <string name="hint_rate">Rate (%)</string>
+    <string name="hint_night_diff_hours">Night Diff. (Hours)</string>
+    <string name="text_holiday_type">Holiday Type</string>
+    <string name="hint_holiday_pay_day_count">Holiday Pay (Day Count)</string>
+    <string name="text_basic_details">BASIC DETAILS</string>
+    <string name="hint_basic_salary">Basic Salary</string>
+    <string name="default_basic_salary_value">10000</string>
+    <string name="text_sss_contribution">SSS Contribution</string>
+    <string name="text_philhealth_contribution">Philhealth Contribution</string>
+    <string name="text_pag_ibig_contribution">Pag-ibig Contribution</string>
+    <string name="text_working_days">Working Days</string>
+    <string name="text_daily_rate">Daily rate</string>
+    <string name="text_salary_period">Salary Period</string>
+    <string name="text_employment_status">Employment Status</string>
+    <string name="text_civil_status">Civil Status</string>
+    <string name="desc_loading_icon">loading_icon</string>
+    <string name="text_allowance">ALLOWANCE</string>
+    <string name="hint_meal">Meal</string>
+    <string name="hint_transportation">Transportation</string>
+    <string name="hint_cola">COLA</string>
+    <string name="hint_tax_shielded">Tax Shielded</string>
+    <string name="text_header_calculations">CALCULATIONS</string>
+    <string name="text_basic_salary">Basic Salary:</string>
+    <string name="hint_total_miscellaneous">Total Miscellaneous:</string>
+    <string name="hint_wage_deduction">Wage Deduction:</string>
+    <string name="hint_gross_pay">Gross Pay:</string>
+    <string name="hint_withholding_tax">Withholding Tax:</string>
+    <string name="hint_sss_contribution">SSS Contribution:</string>
+    <string name="hint_philhealth_contribution">PhilHealth Contribution:</string>
+    <string name="hint_pagibig_contribution">PAGIBIG Contribution:</string>
+    <string name="hint_net_pay">Net Pay:</string>
+    <string name="hint_total_allowance">Total Allowance:</string>
+    <string name="text_wage_deduction">WAGE DEDUCTION</string>
+    <string name="hint_absent_day_s">Absent (Day/s)</string>
+    <string name="hint_tardiness_minute_s">Tardiness (Minute/s)</string>
+    <string name="hint_undertime_minutes_s">Undertime (Minutes/s)</string>
+    <string name="text_calculations">"CALCULATIONS  : "</string>
 
     <string-array name="string_array_menu">
         <item>Basic Information</item>

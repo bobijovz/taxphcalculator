@@ -11,31 +11,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/header_deductions"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tv_header_deduct_label"
                     style="@style/ButtonHeaderStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:drawableTint="#555"
-                    android:text="WAGE DEDUCTION"
                     android:gravity="center_vertical"
-                    android:layout_weight="1"/>
+                    android:text="@string/text_wage_deduction" />
 
                 <TextView
                     android:id="@+id/tv_header_deduct_total"
                     style="@style/ButtonHeaderStyle2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="20,000.00"
                     android:layout_weight="2"
-                    android:visibility="gone"/>
+                    android:gravity="center_vertical"
+                    android:text="@string/default_total_value"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -44,18 +45,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="10dp"
                 android:visibility="gone">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="#ccc"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:background="#ccc"
+                    android:contentDescription="@string/description_image_divider" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -65,7 +67,7 @@
                         android:id="@+id/edittext_absent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Absent (Day/s)"
+                        android:hint="@string/hint_absent_day_s"
                         android:inputType="numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -77,7 +79,7 @@
                         android:id="@+id/edittext_tardiness"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Tardiness (Minute/s)"
+                        android:hint="@string/hint_tardiness_minute_s"
                         android:inputType="numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -89,7 +91,7 @@
                         android:id="@+id/edittext_undertime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Undertime (Minutes/s)"
+                        android:hint="@string/hint_undertime_minutes_s"
                         android:inputType="numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 

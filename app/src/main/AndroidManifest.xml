@@ -26,8 +26,6 @@
             android:value="com.itseasyright.app.taxphcalculator" />
 
         <activity android:name=".MainActivity" />
-        <activity android:name=".ResultActivity"
-            android:label="Computation Result" />
 
         <activity
             android:name=".SyncDataActivity"

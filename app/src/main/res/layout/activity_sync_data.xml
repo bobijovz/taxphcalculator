@@ -2,29 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:background="#666"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
+        android:id="@+id/loading_icon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:text="Checking for updates.."
-        android:textSize="50dp" />
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_margin="100dp"
+        android:contentDescription="@string/desc_loading_icon"
+        android:src="@drawable/icon" />
 
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="50dp"
         android:indeterminate="true"
         android:max="100"
-        android:progress="50"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:progress="50" />
 
 
 </RelativeLayout>

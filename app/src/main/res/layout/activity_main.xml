@@ -6,54 +6,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#eee"
-        android:orientation="vertical"
-        tools:context="com.itseasyright.app.taxphcalculator.MainActivity">
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#eee"
+            android:orientation="vertical"
+            tools:context="com.itseasyright.app.taxphcalculator.MainActivity">
 
-        <include android:id="@+id/basic" layout="@layout/cardview_basic_layout" />
+            <include
+                android:id="@+id/basic"
+                layout="@layout/cardview_basic_layout" />
 
-        <include android:id="@+id/misc1" layout="@layout/cardview_misc1_layout" />
+            <include
+                android:id="@+id/misc1"
+                layout="@layout/cardview_misc1_layout" />
 
-        <include android:id="@+id/misc2" layout="@layout/cardview_misc2_layout" />
+            <include
+                android:id="@+id/misc2"
+                layout="@layout/cardview_misc2_layout" />
 
-        <include android:id="@+id/allowance" layout="@layout/cardview_allowance_layout" />
+            <include
+                android:id="@+id/allowance"
+                layout="@layout/cardview_allowance_layout" />
 
-        <include android:id="@+id/calculations" layout="@layout/cardview_calculation_layout"/>
+            <include
+                android:id="@+id/calculations"
+                layout="@layout/cardview_calculation_layout" />
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:layout_marginTop="10dp">-->
-
-            <!--<Button-->
-                <!--android:id="@+id/btn_reset"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="2dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/bg_btn_selector"-->
-                <!--android:text="Reset"-->
-                <!--android:textColor="#eee"-->
-                <!--android:textStyle="bold" />-->
-
-            <!--<Button-->
-                <!--android:id="@+id/btn_calculate"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="2dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/bg_btn_selector"-->
-                <!--android:text="Calculate"-->
-                <!--android:textColor="#eee"-->
-                <!--android:textStyle="bold" />-->
-        <!--</LinearLayout>-->
-    </LinearLayout>
+        </LinearLayout>
 
     </ScrollView>
 </layout>

@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void expandAllowance() {
-        binder.allowance.tvHeaderAllowanceLabel.setText("ALLOWANCE");
+        binder.allowance.tvHeaderAllowanceLabel.setText(R.string.text_allowance);
         binder.allowance.tvHeaderAllowanceTotal.setVisibility(View.GONE);
         collapseMisc();
         expand(binder.allowance.contentAllowance);
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void collapseCalculations() {
-        binder.calculations.tvHeaderCalculationsLabel.setText("CALCULATIONS  : ");
+        binder.calculations.tvHeaderCalculationsLabel.setText(R.string.text_calculations);
         binder.calculations.tvHeaderCalculationsTotal.setText(df.format(totalCalculation));
         binder.calculations.tvHeaderCalculationsTotal.setVisibility(View.VISIBLE);
         collapse(binder.calculations.contentCalculations);
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void expandCalculations() {
-        binder.calculations.tvHeaderCalculationsLabel.setText("CALCULATIONS");
+        binder.calculations.tvHeaderCalculationsLabel.setText(R.string.text_header_calculations);
         binder.calculations.tvHeaderCalculationsTotal.setVisibility(View.GONE);
         collapseAllowance();
         expand(binder.calculations.contentCalculations);
@@ -322,7 +322,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         final int targetHeight = v.getMeasuredHeight();
 
-        // Older versions of android (pre API 21) cancel animations for views with a height of 0.
         v.getLayoutParams().height = 1;
         v.setVisibility(View.VISIBLE);
         Animation a = new Animation() {
@@ -339,8 +338,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         };
-
-        // 1dp/ms
         a.setDuration((int) (targetHeight / v.getContext().getResources().getDisplayMetrics().density));
         a.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -350,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                binder.scrollview.fullScroll(View.FOCUS_DOWN);
+                binder.scrollview.scrollTo(0, v.getTop());
             }
 
             @Override
@@ -380,8 +377,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         };
-
-        // 1dp/ms
         a.setDuration((int) (initialHeight / v.getContext().getResources().getDisplayMetrics().density));
         v.startAnimation(a);
     }
@@ -446,15 +441,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void resetFields() {
-//        binder.edittextBasicSalary.setText("0.0");
-//        binder.textviewSssContrib.setText("0.0");
-//        binder.textviewPhilhealthContrib.setText("0.0");
-//        binder.textviewPagibigContrib.setText("0.0");
-//        binder.edittextMeal.setText(String.valueOf(mealAllowance));
-//        binder.edittextTransportation.setText(String.valueOf(transpoAllowance));
-//        binder.edittextCola.setText(String.valueOf(colAllowance));
-//        binder.edittextOther.setText(String.valueOf(otherAllowance));
-//        binder.edittextTaxShielded.setText(String.valueOf(taxShieldedAllowance));
+
     }
 
     @Override
