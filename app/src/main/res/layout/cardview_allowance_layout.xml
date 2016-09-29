@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-
     <android.support.v7.widget.CardView
         android:id="@+id/container_allowance"
         style="@style/CardViewStyle"
@@ -11,7 +10,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <LinearLayout
                 android:id="@+id/header_allowance"
                 android:layout_width="match_parent"
@@ -45,19 +43,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 android:visibility="gone">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginBottom="10dp"
+                    android:background="#ccc"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="#ccc"
-                    android:contentDescription="@string/description_image_divider" />
+                    android:layout_marginBottom="10dp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -68,7 +65,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_meal"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true" />
+
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -80,7 +79,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_transportation"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -92,7 +92,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_cola"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -104,7 +105,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_tax_shielded"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>

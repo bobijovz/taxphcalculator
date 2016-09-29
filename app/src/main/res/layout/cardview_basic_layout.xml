@@ -23,10 +23,10 @@
                     style="@style/ButtonHeaderStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:drawableTint="#ccc"
+                    android:text="BASIC DETAILS"
                     android:gravity="center_vertical"
-                    android:text="@string/text_basic_details" />
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/tvHeaderTotal"
@@ -71,6 +71,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_basic_salary"
                         android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
                         android:text="@string/default_basic_salary_value" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -91,7 +92,7 @@
                 <TextView
                     android:id="@+id/textview_sss_contrib"
                     android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_above="@+id/textview_philhealth_label"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/tv_sss_label"
@@ -118,7 +119,7 @@
                 <TextView
                     android:id="@+id/textview_philhealth_contrib"
                     android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_above="@+id/textview_pagibig_label"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/textview_philhealth_label"
@@ -145,7 +146,7 @@
                 <TextView
                     android:id="@+id/textview_pagibig_contrib"
                     android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/spinner_civil_status"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/textview_pagibig_label"
