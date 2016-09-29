@@ -28,15 +28,15 @@
                     android:gravity="center_vertical"
                     android:text="@string/text_header_calculations" />
 
-                <TextView
-                    android:id="@+id/tv_header_calculations_total"
-                    style="@style/ButtonHeaderStyle2"
+                <Spinner
+                    android:id="@+id/spinner_calculations_frequency"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="1.5"
                     android:gravity="center_vertical"
-                    android:text="@string/default_total_value"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    android:entries="@array/string_array_salary_frequency"
+                    android:layout_marginEnd="20dp"/>
 
             </LinearLayout>
 

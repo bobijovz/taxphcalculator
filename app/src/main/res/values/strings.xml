@@ -87,4 +87,11 @@
         <item>6 days a week</item>
     </string-array>
 
+    <string-array name="string_array_salary_frequency">
+        <item>Daily</item>
+        <item>Semi-monthly</item>
+        <item>Monthly</item>
+        <item>Annually</item>
+    </string-array>
+
 </resources>

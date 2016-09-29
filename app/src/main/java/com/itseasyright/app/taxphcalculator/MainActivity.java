@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binder.calculations.headerCalculations.setOnClickListener(this);
         binder.basic.spinnerCivilStatus.setOnItemSelectedListener(this);
         binder.basic.spinnerEmploymentStatus.setOnItemSelectedListener(this);
-        binder.basic.spinnerSalaryPeriod.setOnItemSelectedListener(this);
         binder.basic.spinnerWorkingDays.setOnItemSelectedListener(this);
         binder.basic.edittextBasicSalary.addTextChangedListener(this);
         binder.calculations.containerCalculations.setVisibility(View.GONE);
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkValues();
         binder.basic.spinnerCivilStatus.setSelection(1);
         basicSalary = getViewValue(binder.basic.edittextBasicSalary);
+        binder.calculations.spinnerCalculationsFrequency.setSelection(2);
     }
 
     @Override
@@ -115,6 +115,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void computeResult() {
 
+        double monthly = 1;
+        double semiMonthly = 2;
+        double daily = 20;
+        double yearly = 12;
+
         grossSalaryDeducted = (basicSalary + totalMisc) - totalWageDeduct;
         totalContrib = sssContrib + phContrib + pagibigContrib;
         taxableIncome = grossSalaryDeducted - totalContrib;
@@ -124,16 +129,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         withholdingTax = temp2 + birContrib.getExemption();
         netIncome = taxableIncome - withholdingTax;
 
-        binder.calculations.tvCalculationBasicSalary.setText(df.format(basicSalary));
-        binder.calculations.tvCalculationTotalMisc.setText(df.format(totalMisc));
-        binder.calculations.tvCalculationWageDeduction.setText(df.format(totalWageDeduct));
-        binder.calculations.tvCalculationGrossSalary.setText(df.format(grossSalaryDeducted));
-        binder.calculations.tvCalculationTax.setText(df.format(withholdingTax));
-        binder.calculations.tvCalculationSss.setText(df.format(sssContrib));
-        binder.calculations.tvCalculationPhil.setText(df.format(phContrib));
-        binder.calculations.tvCalculationPagibig.setText(df.format(pagibigContrib));
-        binder.calculations.tvCalculationAllowance.setText(df.format(totalAllowance));
-        binder.calculations.tvCalculationNetPay.setText(df.format(netIncome));
+        if(binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 0)
+        {
+            setSalaryFrequencyDiv(daily);
+        }
+        if(binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 1)
+        {
+            setSalaryFrequencyDiv(semiMonthly);
+
+        }
+        if(binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 2)
+        {
+            setSalaryFrequencyDiv(monthly);
+        }
+        if(binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 3)
+        {
+            setSalaryFrequencyMult(yearly);
+        }
+
+        binder.calculations.spinnerCalculationsFrequency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                computeResult();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    public void setSalaryFrequencyDiv(double frequency) {
+        binder.calculations.tvCalculationBasicSalary.setText(df.format(basicSalary / frequency));
+        binder.calculations.tvCalculationTotalMisc.setText(df.format(totalMisc / frequency));
+        binder.calculations.tvCalculationWageDeduction.setText(df.format(totalWageDeduct / frequency));
+        binder.calculations.tvCalculationGrossSalary.setText(df.format(grossSalaryDeducted / frequency));
+        binder.calculations.tvCalculationTax.setText(df.format(withholdingTax / frequency));
+        binder.calculations.tvCalculationSss.setText(df.format(sssContrib / frequency));
+        binder.calculations.tvCalculationPhil.setText(df.format(phContrib / frequency));
+        binder.calculations.tvCalculationPagibig.setText(df.format(pagibigContrib / frequency));
+        binder.calculations.tvCalculationAllowance.setText(df.format(totalAllowance / frequency));
+        binder.calculations.tvCalculationNetPay.setText(df.format(netIncome / frequency));
+    }
+
+    public void setSalaryFrequencyMult(double frequency) {
+        binder.calculations.tvCalculationBasicSalary.setText(df.format(basicSalary * frequency));
+        binder.calculations.tvCalculationTotalMisc.setText(df.format(totalMisc * frequency));
+        binder.calculations.tvCalculationWageDeduction.setText(df.format(totalWageDeduct * frequency));
+        binder.calculations.tvCalculationGrossSalary.setText(df.format(grossSalaryDeducted * frequency));
+        binder.calculations.tvCalculationTax.setText(df.format(withholdingTax * frequency));
+        binder.calculations.tvCalculationSss.setText(df.format(sssContrib * frequency));
+        binder.calculations.tvCalculationPhil.setText(df.format(phContrib * frequency));
+        binder.calculations.tvCalculationPagibig.setText(df.format(pagibigContrib * frequency));
+        binder.calculations.tvCalculationAllowance.setText(df.format(totalAllowance * frequency));
+        binder.calculations.tvCalculationNetPay.setText(df.format(netIncome * frequency));
     }
 
     @Override
@@ -272,7 +323,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseBasic();
         collapseMisc();
         binder.calculations.containerCalculations.setVisibility(View.GONE);
-
     }
 
     public void collapseAllowance() {
@@ -301,10 +351,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void expandCalculations() {
         binder.calculations.tvHeaderCalculationsLabel.setText(R.string.text_header_calculations);
-        binder.calculations.tvHeaderCalculationsTotal.setVisibility(View.GONE);
         collapseAllowance();
-        expand(binder.calculations.contentCalculations);
         collapseMisc();
+        expand(binder.calculations.contentCalculations);
         collapseBasic();
         collapseDeduct();
         collapseBasic();
@@ -378,7 +427,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (getViewValue(binder.basic.edittextBasicSalary) < 10000) {
             binder.basic.spinnerCivilStatus.setEnabled(false);
             binder.basic.spinnerEmploymentStatus.setEnabled(false);
-            binder.basic.spinnerSalaryPeriod.setEnabled(false);
+//            binder.basic.spinnerSalaryPeriod.setEnabled(false);
             binder.basic.edittextBasicSalary.setError("Please input valid basic salary");
             binder.misc1.headerMisc.setEnabled(false);
             binder.misc2.headerDeductions.setEnabled(false);
@@ -389,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binder.basic.edittextBasicSalary.setError(null);
             binder.basic.spinnerCivilStatus.setEnabled(true);
             binder.basic.spinnerEmploymentStatus.setEnabled(true);
-            binder.basic.spinnerSalaryPeriod.setEnabled(true);
+//            binder.basic.spinnerSalaryPeriod.setEnabled(true);
             binder.misc1.headerMisc.setEnabled(true);
             binder.misc2.headerDeductions.setEnabled(true);
             binder.allowance.headerAllowance.setEnabled(true);
@@ -397,8 +446,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public Double getViewValue(View view){
-        EditText temp = (EditText)view;
+    public Double getViewValue(View view) {
+        EditText temp = (EditText) view;
         return temp.length() > 0 ? Double.valueOf(temp.getText().toString()) : 0.0;
     }
 
@@ -422,15 +471,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 phContrib = philhealthList.get(0).getShare();
                 birContrib = birList.get(0);
 
-                if (binder.basic.spinnerSalaryPeriod.getSelectedItemPosition() == 1) {
-                    binder.basic.textviewSssContrib.setText(df.format(sssContrib));
-                    binder.basic.textviewPhilhealthContrib.setText(df.format(phContrib));
-                    binder.basic.textviewPagibigContrib.setText(df.format(pagibigContrib));
-                } else {
-                    binder.basic.textviewSssContrib.setText(df.format(sssContrib / 2));
-                    binder.basic.textviewPhilhealthContrib.setText(df.format(phContrib / 2));
-                    binder.basic.textviewPagibigContrib.setText(df.format(pagibigContrib));
-                }
+//                if (binder.basic.spinnerSalaryPeriod.getSelectedItemPosition() == 1) {
+//                    binder.basic.textviewSssContrib.setText(df.format(sssContrib));
+//                    binder.basic.textviewPhilhealthContrib.setText(df.format(phContrib));
+//                    binder.basic.textviewPagibigContrib.setText(df.format(pagibigContrib));
+//                } else {
+//                    binder.basic.textviewSssContrib.setText(df.format(sssContrib / 2));
+//                    binder.basic.textviewPhilhealthContrib.setText(df.format(phContrib / 2));
+//                    binder.basic.textviewPagibigContrib.setText(df.format(pagibigContrib));
+//                }
             } else {
                 Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
             }
@@ -458,6 +507,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binder.allowance.edittextCola.setText("");
         binder.allowance.edittextTaxShielded.setText("");
         binder.allowance.tvHeaderAllowanceTotal.setText(R.string.default_total_value);
+
+        binder.calculations.spinnerCalculationsFrequency.setSelection(3);
     }
 
     @Override
@@ -480,7 +531,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
-            case R.id.spinner_salary_period:
+//            case R.id.spinner_salary_period:
             case R.id.spinner_employment_status:
             case R.id.spinner_working_days:
                 computeContribution();
