@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void collapseMisc() {
-        Double hourlyRate = dailyRate / 8;
+      /*  Double hourlyRate = dailyRate / 8;
         Double nightDiffRate = binder.misc1.edittextNightDiffRate.length() > 0 ? getViewValue(binder.misc1.edittextNightDiffRate) : 1.30;
         Double otHrs = getViewValue(binder.misc1.edittextOvertimePay);
         Double nightDiffHrs = getViewValue(binder.misc1.edittextNightDifferential);
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         holidayPay = (holidayCount * dailyRate) * holidayRate;
         otPay = otHrs * 1.25 * hourlyRate;
         nightDiffPay = nightDiffHrs * nightDiffRate * hourlyRate;
-        totalMisc = otPay + nightDiffPay + holidayPay;
+        totalMisc = otPay + nightDiffPay + holidayPay;*/
         binder.misc1.tvHeaderMiscLabel.setText(R.string.text_miscellaneous_label);
         binder.misc1.tvHeaderMiscTotal.setText(df.format(totalMisc));
         binder.misc1.tvHeaderMiscTotal.setVisibility(View.VISIBLE);

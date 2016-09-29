@@ -19,7 +19,7 @@
 
             <include
                 android:id="@+id/misc1"
-                layout="@layout/cardview_misc1_layout" />
+                layout="@layout/cardview_other_income" />
 
             <include
                 android:id="@+id/misc2"
