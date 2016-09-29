@@ -71,7 +71,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_overtime_pay"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -86,7 +87,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_rate"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -102,7 +104,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_night_diff_hours"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <TextView
@@ -138,7 +141,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_holiday_pay_day_count"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"/>
                 </android.support.design.widget.TextInputLayout>
 
             </RelativeLayout>

@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void collapseBasic() {
         if (binder.basic.edittextBasicSalary.length() > 0) {
-            binder.basic.btnHeaderLabel.setText("BASIC SALARY  : ");
+            binder.basic.btnHeaderLabel.setText(R.string.text_basic_details_label);
             binder.basic.tvHeaderTotal.setText(df.format(Double.valueOf(binder.basic.edittextBasicSalary.getText().toString())));
             binder.basic.tvHeaderTotal.setVisibility(View.VISIBLE);
             basicSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void expandBasic() {
-        binder.basic.btnHeaderLabel.setText("BASIC DETAILS");
+        binder.basic.btnHeaderLabel.setText(R.string.text_basic_details);
         binder.basic.tvHeaderTotal.setVisibility(View.GONE);
         collapseMisc();
         collapseDeduct();
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         otPay = otHrs * 1.25 * hourlyRate;
         nightDiffPay = nightDiffHrs * nightDiffRate * hourlyRate;
         totalMisc = otPay + nightDiffPay + holidayPay;
-        binder.misc1.tvHeaderMiscLabel.setText("MISCELLANEOUS  : ");
+        binder.misc1.tvHeaderMiscLabel.setText(R.string.text_miscellaneous_label);
         binder.misc1.tvHeaderMiscTotal.setText(df.format(totalMisc));
         binder.misc1.tvHeaderMiscTotal.setVisibility(View.VISIBLE);
         collapse(binder.misc1.contentMisc);
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void expandMisc() {
         expand(binder.misc1.contentMisc);
-        binder.misc1.tvHeaderMiscLabel.setText("MISCELLANEOUS");
+        binder.misc1.tvHeaderMiscLabel.setText(R.string.text_miscellaneous);
         binder.misc1.tvHeaderMiscTotal.setVisibility(View.GONE);
         collapseAllowance();
         collapseBasic();
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Double undertimeDeduct = (undertimeCount / 60) * (dailyRate / 8);
         totalWageDeduct = absentDeduct + tardinessDeduct + undertimeDeduct;
 
-        binder.misc2.tvHeaderDeductLabel.setText("DEDUCTIONS  : ");
+        binder.misc2.tvHeaderDeductLabel.setText(R.string.text_deductiuons_label);
         binder.misc2.tvHeaderDeductTotal.setText(df.format(totalWageDeduct));
         binder.misc2.tvHeaderDeductTotal.setVisibility(View.VISIBLE);
         collapse(binder.misc2.contentDeductions);
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void expandDeduct() {
         expand(binder.misc2.contentDeductions);
-        binder.misc2.tvHeaderDeductLabel.setText("WAGE DEDUCTIONS");
+        binder.misc2.tvHeaderDeductLabel.setText(R.string.text_wage_deductions);
         binder.misc2.tvHeaderDeductTotal.setVisibility(View.GONE);
         collapseAllowance();
         collapseBasic();
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Double cola = binder.allowance.edittextCola.length() > 0 ? Double.valueOf(binder.allowance.edittextCola.getText().toString()) : 0;
         Double taxShield = binder.allowance.edittextTaxShielded.length() > 0 ? Double.valueOf(binder.allowance.edittextTaxShielded.getText().toString()) : 0;
         totalAllowance = mealAllowance + transpoAllowance + cola + taxShield;
-        binder.allowance.tvHeaderAllowanceLabel.setText("ALLOWANCE  : ");
+        binder.allowance.tvHeaderAllowanceLabel.setText(R.string.text_allowance_label);
         binder.allowance.tvHeaderAllowanceTotal.setText(df.format(totalAllowance));
         binder.allowance.tvHeaderAllowanceTotal.setVisibility(View.VISIBLE);
         collapse(binder.allowance.contentAllowance);
@@ -301,14 +301,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         collapseDeduct();
         binder.calculations.containerCalculations.setVisibility(View.GONE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-    }
-
-    public void collapseCalculations() {
-        binder.calculations.tvHeaderCalculationsLabel.setText(R.string.text_calculations);
-        binder.calculations.tvHeaderCalculationsTotal.setText(df.format(totalCalculation));
-        binder.calculations.tvHeaderCalculationsTotal.setVisibility(View.VISIBLE);
-        collapse(binder.calculations.contentCalculations);
-        imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
     }
 
     public void expandCalculations() {
