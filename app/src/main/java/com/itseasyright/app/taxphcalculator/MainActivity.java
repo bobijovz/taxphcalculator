@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.itseasyright.app.taxphcalculator.Entities.BirSalaryDeductions;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         expand(binder.basic.contentBasic);
         checkValues();
         binder.basic.spinnerCivilStatus.setSelection(1);
-        basicSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
+        basicSalary = getViewValue(binder.basic.edittextBasicSalary);
     }
 
     @Override
@@ -100,13 +101,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             resetFields();
             return true;
         } else if (id == R.id.action_calculate) {
-            if (binder.basic.edittextBasicSalary.length() > 4) {
+            if (getViewValue(binder.basic.edittextBasicSalary) > 9999) {
                 binder.calculations.containerCalculations.setVisibility(View.VISIBLE);
                 expandCalculations();
                 computeContribution();
                 computeResult();
             } else {
-                Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(binder.getRoot(), "Please input valid basic salary", Snackbar.LENGTH_LONG).show();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -200,9 +201,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void collapseBasic() {
         if (binder.basic.edittextBasicSalary.length() > 0) {
             binder.basic.btnHeaderLabel.setText(R.string.text_basic_details_label);
-            binder.basic.tvHeaderTotal.setText(df.format(Double.valueOf(binder.basic.edittextBasicSalary.getText().toString())));
+            binder.basic.tvHeaderTotal.setText(df.format(getViewValue(binder.basic.edittextBasicSalary)));
             binder.basic.tvHeaderTotal.setVisibility(View.VISIBLE);
-            basicSalary = Double.valueOf(binder.basic.edittextBasicSalary.getText().toString());
+            basicSalary = getViewValue(binder.basic.edittextBasicSalary);
         }
         collapse(binder.basic.contentBasic);
         imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
@@ -221,10 +222,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void collapseMisc() {
         Double hourlyRate = dailyRate / 8;
-        Double nightDiffRate = binder.misc1.edittextNightDiffRate.length() > 0 ? Double.valueOf(binder.misc1.edittextNightDiffRate.getText().toString()) : 1.30;
-        Double otHrs = binder.misc1.edittextOvertimePay.getText().length() > 0 ? Double.valueOf(binder.misc1.edittextOvertimePay.getText().toString()) : 0.0;
-        Double nightDiffHrs = binder.misc1.edittextNightDifferential.getText().length() > 0 ? Double.valueOf(binder.misc1.edittextNightDifferential.getText().toString()) : 0.0;
-        Double holidayCount = binder.misc1.edittextHolidayPay.length() > 0 ? Double.valueOf(binder.misc1.edittextHolidayPay.getText().toString()) : 0.0;
+        Double nightDiffRate = binder.misc1.edittextNightDiffRate.length() > 0 ? getViewValue(binder.misc1.edittextNightDiffRate) : 1.30;
+        Double otHrs = getViewValue(binder.misc1.edittextOvertimePay);
+        Double nightDiffHrs = getViewValue(binder.misc1.edittextNightDifferential);
+        Double holidayCount = getViewValue(binder.misc1.edittextHolidayPay);
         Double holidayRate = binder.misc1.spinnerHolidayType.getSelectedItemPosition() == 0 ? 1.0 : 0.30;
         holidayPay = (holidayCount * dailyRate) * holidayRate;
         otPay = otHrs * 1.25 * hourlyRate;
@@ -251,11 +252,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void collapseDeduct() {
-        Integer absentCount = binder.misc2.edittextAbsent.length() > 0 ? Integer.valueOf(binder.misc2.edittextAbsent.getText().toString()) : 0;
+        Double absentCount = getViewValue(binder.misc2.edittextAbsent);
         Double absentDeduct = absentCount * dailyRate;
-        Double tardinessCount = binder.misc2.edittextTardiness.length() > 0 ? Double.valueOf(binder.misc2.edittextTardiness.getText().toString()) : 0;
+        Double tardinessCount = getViewValue(binder.misc2.edittextTardiness);
         Double tardinessDeduct = (tardinessCount / 60) * (dailyRate / 8);
-        Double undertimeCount = binder.misc2.edittextUndertime.length() > 0 ? Double.valueOf(binder.misc2.edittextUndertime.getText().toString()) : 0;
+        Double undertimeCount = getViewValue(binder.misc2.edittextUndertime);
         Double undertimeDeduct = (undertimeCount / 60) * (dailyRate / 8);
         totalWageDeduct = absentDeduct + tardinessDeduct + undertimeDeduct;
 
@@ -279,10 +280,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void collapseAllowance() {
-        Double mealAllowance = binder.allowance.edittextMeal.length() > 0 ? Double.valueOf(binder.allowance.edittextMeal.getText().toString()) : 0;
-        Double transpoAllowance = binder.allowance.edittextTransportation.length() > 0 ? Double.valueOf(binder.allowance.edittextTransportation.getText().toString()) : 0;
-        Double cola = binder.allowance.edittextCola.length() > 0 ? Double.valueOf(binder.allowance.edittextCola.getText().toString()) : 0;
-        Double taxShield = binder.allowance.edittextTaxShielded.length() > 0 ? Double.valueOf(binder.allowance.edittextTaxShielded.getText().toString()) : 0;
+        Double mealAllowance = getViewValue(binder.allowance.edittextMeal);
+        Double transpoAllowance = getViewValue(binder.allowance.edittextTransportation);
+        Double cola = getViewValue(binder.allowance.edittextCola);
+        Double taxShield = getViewValue(binder.allowance.edittextTaxShielded);
         totalAllowance = mealAllowance + transpoAllowance + cola + taxShield;
         binder.allowance.tvHeaderAllowanceLabel.setText(R.string.text_allowance_label);
         binder.allowance.tvHeaderAllowanceTotal.setText(df.format(totalAllowance));
@@ -379,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void checkValues() {
-        if (binder.basic.edittextBasicSalary.length() <= 4) {
+        if (getViewValue(binder.basic.edittextBasicSalary) < 10000) {
             binder.basic.spinnerCivilStatus.setEnabled(false);
             binder.basic.spinnerEmploymentStatus.setEnabled(false);
             binder.basic.spinnerSalaryPeriod.setEnabled(false);
@@ -401,9 +402,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public Double getViewValue(View view){
+        EditText temp = (EditText)view;
+        return temp.length() > 0 ? Double.valueOf(temp.getText().toString()) : 0.0;
+    }
+
 
     public void computeContribution() {
-        if (binder.basic.edittextBasicSalary.length() > 4) {
+        if (getViewValue(binder.basic.edittextBasicSalary) > 9999) {
             String basic_salary = String.valueOf(binder.basic.edittextBasicSalary.getText());
             List<Sss> sssList = Sss.findWithQuery(Sss.class, "select * from sss where salary_range < ? order by id DESC limit 1", basic_salary);
             List<Philhealth> philhealthList = Philhealth.findWithQuery(Philhealth.class, "select * from philhealth where base_salary <= ? order by id DESC limit 1", basic_salary);
