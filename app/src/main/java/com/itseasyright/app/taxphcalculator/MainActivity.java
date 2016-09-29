@@ -439,7 +439,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void resetFields() {
+        binder.basic.edittextBasicSalary.setText("");
+        binder.basic.tvHeaderTotal.setText(R.string.default_total_value);
 
+        binder.misc1.edittextHolidayPay.setText("");
+        binder.misc1.edittextNightDifferential.setText("");
+        binder.misc1.edittextNightDiffRate.setText("");
+        binder.misc1.edittextOvertimePay.setText("");
+        binder.misc1.tvHeaderMiscTotal.setText(R.string.default_total_value);
+
+        binder.misc2.edittextAbsent.setText("");
+        binder.misc2.edittextTardiness.setText("");
+        binder.misc2.edittextUndertime.setText("");
+        binder.misc2.tvHeaderDeductTotal.setText(R.string.default_total_value);
+
+        binder.allowance.edittextMeal.setText("");
+        binder.allowance.edittextTransportation.setText("");
+        binder.allowance.edittextCola.setText("");
+        binder.allowance.edittextTaxShielded.setText("");
+        binder.allowance.tvHeaderAllowanceTotal.setText(R.string.default_total_value);
     }
 
     @Override

@@ -47,6 +47,7 @@
     <string name="text_miscellaneous">OTHER INCOME</string>
     <string name="text_miscellaneous_label">"MISCELLANEOUS  : "</string>
     <string name="text_basic_details_label">"BASIC SALARY  : "</string>
+    <string name="text_zero">0</string>
 
     <string-array name="string_array_menu">
         <item>Basic Information</item>
