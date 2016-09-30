@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +31,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher, AddOtherIncomeDialogFragment.IncomeDialogInterface {
 
     private ActivityMainBinding binder;
     private String selectedCivilStatus = "zeroexemption";
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Double totalWageDeduct = 0.0;
     private Double dailyRate = 0.0;
     private DecimalFormat df;
+    private OtherIncomeAdapter adapter;
 
     InputMethodManager imm;
 
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binder.basic.spinnerSalaryPeriod.setOnItemSelectedListener(this);
         binder.basic.spinnerWorkingDays.setOnItemSelectedListener(this);
         binder.basic.edittextBasicSalary.addTextChangedListener(this);
+        binder.misc1.imagebuttonAddIncome.setOnClickListener(this);
         binder.calculations.containerCalculations.setVisibility(View.GONE);
         collapse(binder.misc1.contentMisc);
         collapse(binder.allowance.contentAllowance);
@@ -84,6 +88,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkValues();
         binder.basic.spinnerCivilStatus.setSelection(1);
         basicSalary = getViewValue(binder.basic.edittextBasicSalary);
+
+        adapter = new OtherIncomeAdapter(this);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        binder.misc1.recyclerviewOtherIncomeList.setLayoutManager(llm);
+        binder.misc1.recyclerviewOtherIncomeList.setAdapter(adapter);
     }
 
     @Override
@@ -194,6 +205,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.header_calculations:
                 expandCalculations();
                 break;
+            case R.id.imagebutton_add_income:
+                Log.d("show","dialog");
+                AddOtherIncomeDialogFragment frag = AddOtherIncomeDialogFragment.newInstance(this);
+                frag.setDailyRate(dailyRate);
+                frag.show(getFragmentManager(),"ADD INCOME");
+                break;
 
         }
     }
@@ -228,11 +245,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Double holidayRate = binder.misc1.spinnerHolidayType.getSelectedItemPosition() == 0 ? 1.0 : 0.30;
         holidayPay = (holidayCount * dailyRate) * holidayRate;
         otPay = otHrs * 1.25 * hourlyRate;
-        nightDiffPay = nightDiffHrs * nightDiffRate * hourlyRate;
-        totalMisc = otPay + nightDiffPay + holidayPay;*/
+        nightDiffPay = nightDiffHrs * nightDiffRate * hourlyRate;*/
+        totalMisc = adapter.getOtherIncomeTotal();
         binder.misc1.tvHeaderMiscLabel.setText(R.string.text_miscellaneous_label);
         binder.misc1.tvHeaderMiscTotal.setText(df.format(totalMisc));
         binder.misc1.tvHeaderMiscTotal.setVisibility(View.VISIBLE);
+        binder.misc1.imagebuttonAddIncome.setVisibility(View.GONE);
         collapse(binder.misc1.contentMisc);
         imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
 
@@ -242,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         expand(binder.misc1.contentMisc);
         binder.misc1.tvHeaderMiscLabel.setText(R.string.text_miscellaneous);
         binder.misc1.tvHeaderMiscTotal.setVisibility(View.GONE);
+        binder.misc1.imagebuttonAddIncome.setVisibility(View.VISIBLE);
         collapseAllowance();
         collapseBasic();
         collapseDeduct();
@@ -492,5 +511,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+
+    @Override
+    public void onSaved(IncomeModel income) {
+        adapter.addItem(income);
     }
 }

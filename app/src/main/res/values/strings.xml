@@ -45,7 +45,7 @@
     <string name="text_wage_deductions">WAGE DEDUCTIONS</string>
     <string name="text_deductiuons_label">"DEDUCTIONS  : "</string>
     <string name="text_miscellaneous">OTHER INCOME</string>
-    <string name="text_miscellaneous_label">"MISCELLANEOUS  : "</string>
+    <string name="text_miscellaneous_label">"OTHER INCOME  : "</string>
     <string name="text_basic_details_label">"BASIC SALARY  : "</string>
     <string name="hint_working_hours">Working Hours</string>
     <string name="text_x">x</string>
@@ -90,14 +90,17 @@
     </string-array>
 
     <string-array name="other_income_selection">
-        <item>Regular Day w/ OT</item>
-        <item>Regular Day w/ NightDiff</item>
+        <item>OT on Regular Day</item>
+        <item>NightDiff on Regular Day</item>
         <item>Regular Holiday</item>
-        <item>Regular Holiday w/ OT</item>
-        <item>Regular Holiday w/ NightDIff</item>
+        <item>OT on Regular Holiday</item>
+        <item>NightDiff on Regular Holiday</item>
         <item>Special Holiday</item>
-        <item>Special Holiday w/ OT</item>
-        <item>Special Holiday w/ NightDiff</item>
+        <item>OT on Special Holiday</item>
+        <item>NightDiff on Special Holiday</item>
+        <item>Rest Day</item>
+        <item>OT on Rest Day</item>
+        <item>NightDiff on Rest Day</item>
         <item>Custom Rate OT</item>
         <item>Custom Rate NightDiff</item>
     </string-array>
