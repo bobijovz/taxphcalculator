@@ -116,7 +116,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4796886600368348~5259393913");
         AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("C12718A2AD160D3B38E445DEC293C290").build();
+        AdRequest adRequest = new AdRequest.Builder()
+//                .addTestDevice("C12718A2AD160D3B38E445DEC293C290")
+                .build();
         mAdView.loadAd(adRequest);
     }
 

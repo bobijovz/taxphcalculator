@@ -6,64 +6,65 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#eee">
-
-        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        <ScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#eee"
-            android:orientation="vertical"
-            tools:context="com.itseasyright.app.taxphcalculator.MainActivity">
+            android:layout_height="match_parent"
+            android:background="#eee">
 
-            <include
-                android:id="@+id/basic"
-                layout="@layout/cardview_basic_layout" />
-
-            <include
-                android:id="@+id/misc1"
-                layout="@layout/cardview_other_income" />
-
-            <include
-                android:id="@+id/misc2"
-                layout="@layout/cardview_misc2_layout" />
-
-            <include
-                android:id="@+id/allowance"
-                layout="@layout/cardview_allowance_layout" />
-
-            <include
-                android:id="@+id/calculations"
-                layout="@layout/cardview_calculation_layout" />
-
-            <LinearLayout
+            <LinearLayout xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="vertical">
+                android:background="#eee"
+                android:orientation="vertical"
+                tools:context="com.itseasyright.app.taxphcalculator.MainActivity">
 
-                <TextView
+                <include
+                    android:id="@+id/basic"
+                    layout="@layout/cardview_basic_layout" />
+
+                <include
+                    android:id="@+id/misc1"
+                    layout="@layout/cardview_other_income" />
+
+                <include
+                    android:id="@+id/misc2"
+                    layout="@layout/cardview_misc2_layout" />
+
+                <include
+                    android:id="@+id/allowance"
+                    layout="@layout/cardview_allowance_layout" />
+
+                <include
+                    android:id="@+id/calculations"
+                    layout="@layout/cardview_calculation_layout" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/text_copyright"
-                    android:textSize="12sp" />
+                    android:layout_marginBottom="60dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/text_copyright"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </ScrollView>
 
-    </ScrollView>
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            ads:adSize="SMART_BANNER"
             android:layout_alignBottom="@+id/scrollview"
-            ads:adUnitId="@string/banner_ad_unit_id">
-        </com.google.android.gms.ads.AdView>
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id" />
+
     </RelativeLayout>
 </layout>
