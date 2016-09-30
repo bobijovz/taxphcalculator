@@ -29,6 +29,9 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.itseasyright.app.taxphcalculator.Entities.BirSalaryDeductions;
 import com.itseasyright.app.taxphcalculator.Entities.Philhealth;
 import com.itseasyright.app.taxphcalculator.Entities.Sss;
@@ -43,17 +46,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ActivityMainBinding binder;
     private String selectedCivilStatus = "zeroexemption";
-    private BirSalaryDeductions birContrib;
+    private BirSalaryDeductions birSalaryDeductions;
     private Double basicSalary = 0.0;
     private Double grossSalaryDeducted = 0.0;
     private Double sssContrib = 0.0;
     private Double phContrib = 0.0;
     private Double pagibigContrib = 100.0;
-    private Double totalContrib = 0.0;
     private Double totalAllowance = 0.0;
-    private Double taxableIncome = 0.0;
-    private Double ee;
-    private Double er;
     private Double withholdingTax = 0.0;
     private Double netIncome = 0.0;
     private Double totalMisc = 0.0;
@@ -101,6 +100,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binder.misc1.recyclerviewOtherIncomeList.setLayoutManager(llm);
         binder.misc1.recyclerviewOtherIncomeList.setAdapter(adapter);
         initSwipe();
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4796886600368348~5259393913");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("C12718A2AD160D3B38E445DEC293C290").build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override
@@ -128,92 +132,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void computeResult() {
-
-        double monthly = 1;
-        double semiMonthly = 2;
-        double yearly = 12;
-
-        grossSalaryDeducted = (basicSalary + totalMisc) - totalWageDeduct;
-        totalContrib = sssContrib + phContrib + pagibigContrib;
-        taxableIncome = grossSalaryDeducted - totalContrib;
-        Double taxPercent = birContrib.getPercentage() * .01;
-        Double temp1 = taxableIncome - birContrib.getSalaryFloor();
-        Double temp2 = temp1 * taxPercent;
-        withholdingTax = temp2 + birContrib.getExemption();
-        netIncome = taxableIncome - withholdingTax;
-
-        if (binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 0) {
-            if (binder.basic.spinnerWorkingDays.getSelectedItemPosition() == 0) {
-                setSalaryFrequencyDaily(12, 261);
-            } else {
-                setSalaryFrequencyDaily(12, 313);
-            }
-        }
-        if (binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 1) {
-            setSalaryFrequencyDiv(semiMonthly);
-
-        }
-        if (binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 2) {
-            setSalaryFrequencyDiv(monthly);
-        }
-        if (binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 3) {
-            setSalaryFrequencyMult(yearly);
-        }
-
-        binder.calculations.spinnerCalculationsFrequency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                computeResult();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-    }
-
-    public void setSalaryFrequencyDaily(double a, double b) {
-        binder.calculations.tvCalculationBasicSalary.setText(df.format((basicSalary * a) / b));
-        binder.calculations.tvCalculationTotalMisc.setText(df.format((totalMisc * a) / b));
-        binder.calculations.tvCalculationWageDeduction.setText(df.format((totalWageDeduct * a) / b));
-        binder.calculations.tvCalculationGrossSalary.setText(df.format((grossSalaryDeducted * a) / b));
-        binder.calculations.tvCalculationTax.setText(df.format((withholdingTax * a) / b));
-        binder.calculations.tvCalculationSss.setText(df.format((sssContrib * a) / b));
-        binder.calculations.tvCalculationPhil.setText(df.format((phContrib * a) / b));
-        binder.calculations.tvCalculationPagibig.setText(df.format((pagibigContrib * a) / b));
-        binder.calculations.tvCalculationAllowance.setText(df.format((totalAllowance * a) / b));
-        binder.calculations.tvCalculationNetPay.setText(df.format((netIncome * a) / b));
-    }
-
-    public void setSalaryFrequencyDiv(double frequency) {
-        binder.calculations.tvCalculationBasicSalary.setText(df.format(basicSalary / frequency));
-        binder.calculations.tvCalculationTotalMisc.setText(df.format(totalMisc / frequency));
-        binder.calculations.tvCalculationWageDeduction.setText(df.format(totalWageDeduct / frequency));
-        binder.calculations.tvCalculationGrossSalary.setText(df.format(grossSalaryDeducted / frequency));
-        binder.calculations.tvCalculationTax.setText(df.format(withholdingTax / frequency));
-        binder.calculations.tvCalculationSss.setText(df.format(sssContrib / frequency));
-        binder.calculations.tvCalculationPhil.setText(df.format(phContrib / frequency));
-        binder.calculations.tvCalculationPagibig.setText(df.format(pagibigContrib / frequency));
-        binder.calculations.tvCalculationAllowance.setText(df.format(totalAllowance / frequency));
-        binder.calculations.tvCalculationNetPay.setText(df.format(netIncome / frequency));
-    }
-
-    public void setSalaryFrequencyMult(double frequency) {
-        binder.calculations.tvCalculationBasicSalary.setText(df.format(basicSalary * frequency));
-        binder.calculations.tvCalculationTotalMisc.setText(df.format(totalMisc * frequency));
-        binder.calculations.tvCalculationWageDeduction.setText(df.format(totalWageDeduct * frequency));
-        binder.calculations.tvCalculationGrossSalary.setText(df.format(grossSalaryDeducted * frequency));
-        binder.calculations.tvCalculationTax.setText(df.format(withholdingTax * frequency));
-        binder.calculations.tvCalculationSss.setText(df.format(sssContrib * frequency));
-        binder.calculations.tvCalculationPhil.setText(df.format(phContrib * frequency));
-        binder.calculations.tvCalculationPagibig.setText(df.format(pagibigContrib * frequency));
-        binder.calculations.tvCalculationAllowance.setText(df.format(totalAllowance * frequency));
-        binder.calculations.tvCalculationNetPay.setText(df.format(netIncome * frequency));
     }
 
     @Override
@@ -282,6 +200,128 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        checkValues();
+        if (editable.length() > 4) {
+            basicSalary = Double.parseDouble(editable.toString());
+            computeContribution();
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (adapterView.getId()) {
+            case R.id.spinner_employment_status:
+            case R.id.spinner_working_days:
+                computeContribution();
+                break;
+            case R.id.spinner_civil_status:
+                if (i == 0) {
+                    selectedCivilStatus = "zeroexemption";
+                } else if (i == 2 || i == 1) {
+                    selectedCivilStatus = "zerodependents";
+                } else if (i == 3) {
+                    //one dependent
+                    selectedCivilStatus = "onedependents";
+                } else if (i == 4) {
+                    //two dependent
+                    selectedCivilStatus = "twodependents";
+                } else if (i == 5) {
+                    //three dependent
+                    selectedCivilStatus = "threedependents";
+                } else if (i == 6) {
+                    //four dependent
+                    selectedCivilStatus = "fourdependents";
+                }
+                computeContribution();
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    @Override
+    public void onSaved(IncomeModel income) {
+        adapter.addItem(income);
+    }
+
+    public Double getViewValue(View view) {
+        EditText temp = (EditText) view;
+        return temp.length() > 0 ? Double.valueOf(temp.getText().toString()) : 0.0;
+    }
+
+    private void initSwipe() {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                Bitmap icon;
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+                    p.setColor(Color.parseColor("#D32F2F"));
+                    RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
+                    c.drawRect(background, p);
+                    icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_delete_sweep_white_24dp);
+                    RectF icon_dest = new RectF((float) itemView.getRight() - 2 * width, (float) itemView.getTop() + width, (float) itemView.getRight() - width, (float) itemView.getBottom() - width);
+                    c.drawBitmap(icon, null, icon_dest, p);
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+                if (direction == ItemTouchHelper.LEFT) {
+                    adapter.deleteItem(viewHolder.getAdapterPosition());
+                }
+            }
+
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(binder.misc1.recyclerviewOtherIncomeList);
+    }
+
+    public static void collapse(final View v) {
+        final int initialHeight = v.getMeasuredHeight();
+
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                if (interpolatedTime == 1) {
+                    v.setVisibility(View.GONE);
+                } else {
+                    v.getLayoutParams().height = initialHeight - (int) (initialHeight * interpolatedTime);
+                    v.requestLayout();
+                }
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+        a.setDuration((int) (initialHeight / v.getContext().getResources().getDisplayMetrics().density));
+        v.startAnimation(a);
     }
 
     public void collapseBasic() {
@@ -427,29 +467,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         v.startAnimation(a);
     }
 
-    public static void collapse(final View v) {
-        final int initialHeight = v.getMeasuredHeight();
-
-        Animation a = new Animation() {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if (interpolatedTime == 1) {
-                    v.setVisibility(View.GONE);
-                } else {
-                    v.getLayoutParams().height = initialHeight - (int) (initialHeight * interpolatedTime);
-                    v.requestLayout();
-                }
-            }
-
-            @Override
-            public boolean willChangeBounds() {
-                return true;
-            }
-        };
-        a.setDuration((int) (initialHeight / v.getContext().getResources().getDisplayMetrics().density));
-        v.startAnimation(a);
-    }
-
     public void checkValues() {
         if (getViewValue(binder.basic.edittextBasicSalary) < 10000) {
             binder.basic.spinnerCivilStatus.setEnabled(false);
@@ -471,11 +488,91 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public Double getViewValue(View view) {
-        EditText temp = (EditText) view;
-        return temp.length() > 0 ? Double.valueOf(temp.getText().toString()) : 0.0;
+    public void computeResult() {
+
+        double monthly = 1;
+        double semiMonthly = 2;
+        double yearly = 12;
+
+        grossSalaryDeducted = (basicSalary + totalMisc) - totalWageDeduct;
+        Double totalContrib = sssContrib + phContrib + pagibigContrib;
+        Double taxableIncome = grossSalaryDeducted - totalContrib;
+        Double taxPercent = birSalaryDeductions.getPercentage() * .01;
+        Double temp1 = taxableIncome - birSalaryDeductions.getSalaryFloor();
+        Double temp2 = temp1 * taxPercent;
+        withholdingTax = temp2 + birSalaryDeductions.getExemption();
+        netIncome = taxableIncome - withholdingTax;
+
+        if (binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 0) {
+            if (binder.basic.spinnerWorkingDays.getSelectedItemPosition() == 0) {
+                setSalaryFrequencyDaily(12, 261);
+            } else {
+                setSalaryFrequencyDaily(12, 313);
+            }
+        }
+        if (binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 1) {
+            setSalaryFrequencyDiv(semiMonthly);
+
+        }
+        if (binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 2) {
+            setSalaryFrequencyDiv(monthly);
+        }
+        if (binder.calculations.spinnerCalculationsFrequency.getSelectedItemPosition() == 3) {
+            setSalaryFrequencyMult(yearly);
+        }
+
+        binder.calculations.spinnerCalculationsFrequency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                computeResult();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
+    public void setSalaryFrequencyDaily(double a, double b) {
+        binder.calculations.tvCalculationBasicSalary.setText(df.format((basicSalary * a) / b));
+        binder.calculations.tvCalculationTotalMisc.setText(df.format((totalMisc * a) / b));
+        binder.calculations.tvCalculationWageDeduction.setText(df.format((totalWageDeduct * a) / b));
+        binder.calculations.tvCalculationGrossSalary.setText(df.format((grossSalaryDeducted * a) / b));
+        binder.calculations.tvCalculationTax.setText(df.format((withholdingTax * a) / b));
+        binder.calculations.tvCalculationSss.setText(df.format((sssContrib * a) / b));
+        binder.calculations.tvCalculationPhil.setText(df.format((phContrib * a) / b));
+        binder.calculations.tvCalculationPagibig.setText(df.format((pagibigContrib * a) / b));
+        binder.calculations.tvCalculationAllowance.setText(df.format((totalAllowance * a) / b));
+        binder.calculations.tvCalculationNetPay.setText(df.format((netIncome * a) / b));
+    }
+
+    public void setSalaryFrequencyDiv(double frequency) {
+        binder.calculations.tvCalculationBasicSalary.setText(df.format(basicSalary / frequency));
+        binder.calculations.tvCalculationTotalMisc.setText(df.format(totalMisc / frequency));
+        binder.calculations.tvCalculationWageDeduction.setText(df.format(totalWageDeduct / frequency));
+        binder.calculations.tvCalculationGrossSalary.setText(df.format(grossSalaryDeducted / frequency));
+        binder.calculations.tvCalculationTax.setText(df.format(withholdingTax / frequency));
+        binder.calculations.tvCalculationSss.setText(df.format(sssContrib / frequency));
+        binder.calculations.tvCalculationPhil.setText(df.format(phContrib / frequency));
+        binder.calculations.tvCalculationPagibig.setText(df.format(pagibigContrib / frequency));
+        binder.calculations.tvCalculationAllowance.setText(df.format(totalAllowance / frequency));
+        binder.calculations.tvCalculationNetPay.setText(df.format(netIncome / frequency));
+    }
+
+    public void setSalaryFrequencyMult(double frequency) {
+        binder.calculations.tvCalculationBasicSalary.setText(df.format(basicSalary * frequency));
+        binder.calculations.tvCalculationTotalMisc.setText(df.format(totalMisc * frequency));
+        binder.calculations.tvCalculationWageDeduction.setText(df.format(totalWageDeduct * frequency));
+        binder.calculations.tvCalculationGrossSalary.setText(df.format(grossSalaryDeducted * frequency));
+        binder.calculations.tvCalculationTax.setText(df.format(withholdingTax * frequency));
+        binder.calculations.tvCalculationSss.setText(df.format(sssContrib * frequency));
+        binder.calculations.tvCalculationPhil.setText(df.format(phContrib * frequency));
+        binder.calculations.tvCalculationPagibig.setText(df.format(pagibigContrib * frequency));
+        binder.calculations.tvCalculationAllowance.setText(df.format(totalAllowance * frequency));
+        binder.calculations.tvCalculationNetPay.setText(df.format(netIncome * frequency));
+    }
 
     public void computeContribution() {
         if (getViewValue(binder.basic.edittextBasicSalary) > 9999) {
@@ -490,17 +587,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             binder.basic.textviewDailyRate.setText(df.format(dailyRate));
             if (sssList != null && philhealthList != null && birList != null) {
-                ee = sssList.get(0).geteE();
-                er = sssList.get(0).geteR();
+                Double ee = sssList.get(0).geteE();
+                Double er = sssList.get(0).geteR();
                 sssContrib = binder.basic.spinnerEmploymentStatus.getSelectedItemPosition() == 0 ? ee : er;
                 phContrib = philhealthList.get(0).getShare();
-                birContrib = birList.get(0);
+                birSalaryDeductions = birList.get(0);
             } else {
                 Snackbar.make(binder.getRoot(), "Something went wrong, please try again", Snackbar.LENGTH_LONG).show();
             }
         }
     }
-
 
     public void resetFields() {
         binder.basic.edittextBasicSalary.setText("");
@@ -522,101 +618,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binder.allowance.tvHeaderAllowanceTotal.setText(R.string.default_total_value);
 
         binder.calculations.spinnerCalculationsFrequency.setSelection(3);
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-        checkValues();
-        if (editable.length() > 4) {
-            basicSalary = Double.parseDouble(editable.toString());
-            computeContribution();
-        }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (adapterView.getId()) {
-            case R.id.spinner_employment_status:
-            case R.id.spinner_working_days:
-                computeContribution();
-                break;
-            case R.id.spinner_civil_status:
-                if (i == 0) {
-                    selectedCivilStatus = "zeroexemption";
-                } else if (i == 2 || i == 1) {
-                    selectedCivilStatus = "zerodependents";
-                } else if (i == 3) {
-                    //one dependent
-                    selectedCivilStatus = "onedependents";
-                } else if (i == 4) {
-                    //two dependent
-                    selectedCivilStatus = "twodependents";
-                } else if (i == 5) {
-                    //three dependent
-                    selectedCivilStatus = "threedependents";
-                } else if (i == 6) {
-                    //four dependent
-                    selectedCivilStatus = "fourdependents";
-                }
-                computeContribution();
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-    }
-
-
-    @Override
-    public void onSaved(IncomeModel income) {
-        adapter.addItem(income);
-    }
-
-
-    private void initSwipe() {
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                Bitmap icon;
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    View itemView = viewHolder.itemView;
-                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
-                    float width = height / 3;
-                    p.setColor(Color.parseColor("#D32F2F"));
-                    RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
-                    c.drawRect(background, p);
-                    icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_delete_sweep_white_24dp);
-                    RectF icon_dest = new RectF((float) itemView.getRight() - 2 * width, (float) itemView.getTop() + width, (float) itemView.getRight() - width, (float) itemView.getBottom() - width);
-                    c.drawBitmap(icon, null, icon_dest, p);
-                }
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
-                if (direction == ItemTouchHelper.LEFT) {
-                    adapter.deleteItem(viewHolder.getAdapterPosition());
-                }
-            }
-
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(binder.misc1.recyclerviewOtherIncomeList);
     }
 }

@@ -52,6 +52,7 @@
     <string name="hint_working_hours">Working Hours</string>
     <string name="text_x">x</string>
     <string name="text_add_other_income">ADD OTHER INCOME</string>
+    <string name="banner_ad_unit_id">ca-app-pub-4796886600368348/8212860312</string>
 
     <string-array name="string_array_menu">
         <item>Basic Information</item>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "521004397408",
+    "firebase_url": "https://admob-app-id-5259393913.firebaseio.com",
+    "project_id": "admob-app-id-5259393913",
+    "storage_bucket": "admob-app-id-5259393913.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521004397408:android:d428af1839af86f6",
+        "android_client_info": {
+          "package_name": "com.itseasyright.app.taxphcalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521004397408-060tuhb6glas2c126ktr9b4nho0n7een.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2byhLbrEq2fLuGx5PgX6aFrfZcDGCRfA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
