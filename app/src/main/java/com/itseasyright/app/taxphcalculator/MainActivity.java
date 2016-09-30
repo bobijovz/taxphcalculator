@@ -237,15 +237,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void collapseMisc() {
-      /*  Double hourlyRate = dailyRate / 8;
-        Double nightDiffRate = binder.misc1.edittextNightDiffRate.length() > 0 ? getViewValue(binder.misc1.edittextNightDiffRate) : 1.30;
-        Double otHrs = getViewValue(binder.misc1.edittextOvertimePay);
-        Double nightDiffHrs = getViewValue(binder.misc1.edittextNightDifferential);
-        Double holidayCount = getViewValue(binder.misc1.edittextHolidayPay);
-        Double holidayRate = binder.misc1.spinnerHolidayType.getSelectedItemPosition() == 0 ? 1.0 : 0.30;
-        holidayPay = (holidayCount * dailyRate) * holidayRate;
-        otPay = otHrs * 1.25 * hourlyRate;
-        nightDiffPay = nightDiffHrs * nightDiffRate * hourlyRate;*/
         totalMisc = adapter.getOtherIncomeTotal();
         binder.misc1.tvHeaderMiscLabel.setText(R.string.text_miscellaneous_label);
         binder.misc1.tvHeaderMiscTotal.setText(df.format(totalMisc));
@@ -253,7 +244,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binder.misc1.imagebuttonAddIncome.setVisibility(View.GONE);
         collapse(binder.misc1.contentMisc);
         imm.hideSoftInputFromWindow(binder.getRoot().getWindowToken(), 0);
-
     }
 
     public void expandMisc() {

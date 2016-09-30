@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.itseasyright.app.taxphcalculator.databinding.DialogAddOtherIncomeBinding;
 
@@ -39,10 +40,14 @@ public class AddOtherIncomeDialogFragment extends DialogFragment implements View
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_save:
-                dialogInterface.onSaved(new IncomeModel(
-                        binder.spinnerOtherIncomeType.getSelectedItemPosition(),
-                        income));
-                getDialog().dismiss();
+                if (income > 0) {
+                    dialogInterface.onSaved(new IncomeModel(
+                            binder.spinnerOtherIncomeType.getSelectedItemPosition(),
+                            income));
+                    getDialog().dismiss();
+                } else {
+                    Toast.makeText(getDialog().getContext(),"Error, Invalid input!",Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.button_close_dialog:
                 getDialog().dismiss();
