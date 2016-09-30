@@ -60,10 +60,10 @@
                     android:contentDescription="@string/description_image_divider" />
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/label1"
+                    android:id="@+id/tl_basic_salary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/divider1">
+                    android:layout_below="@+id/divider1">
 
                     <EditText
                         android:id="@+id/edittext_basic_salary"
@@ -77,107 +77,81 @@
 
 
                 <TextView
-                    android:id="@+id/tv_sss_label"
-                    android:layout_width="150dp"
+                    android:id="@+id/tv_employment_status_label"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@id/label1"
-                    android:gravity="start"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/tl_basic_salary"
                     android:paddingEnd="0dp"
                     android:paddingStart="10dp"
-                    android:text="@string/text_sss_contribution"
+                    android:text="@string/text_employment_status"
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/textview_sss_contrib"
-                    android:layout_width="150dp"
+                <Spinner
+                    android:id="@+id/spinner_employment_status"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/textview_philhealth_label"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@id/tv_sss_label"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/default_total_value"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/tv_employment_status_label"
+                    android:layout_toStartOf="@+id/spinner_working_days"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/string_array_employment_status" />
 
                 <TextView
-                    android:id="@+id/textview_philhealth_label"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/spinner_salary_period"
-                    android:gravity="start"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/text_philhealth_contribution"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/textview_philhealth_contrib"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/textview_pagibig_label"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@id/textview_philhealth_label"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/default_total_value"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textview_pagibig_label"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/spinner_employment_status"
-                    android:gravity="start"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/text_pag_ibig_contribution"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/textview_pagibig_contrib"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/spinner_civil_status"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@id/textview_pagibig_label"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/default_total_value"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/label_working_days"
+                    android:id="@+id/tv_civil_status_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/spinner_civil_status"
+                    android:layout_below="@+id/spinner_employment_status"
+                    android:layout_marginTop="5dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="10dp"
+                    android:text="@string/text_civil_status"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_civil_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_civil_status_label"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/string_array_civil_status" />
+
+                <TextView
+                    android:id="@+id/tv_working_days_label"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/tl_basic_salary"
                     android:paddingEnd="0dp"
                     android:paddingStart="10dp"
                     android:text="@string/text_working_days"
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp" />
 
+
+                <Spinner
+                    android:id="@+id/spinner_working_days"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/tv_working_days_label"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/string_array_working_days" />
+
                 <TextView
                     android:id="@+id/tv_daily_rate_label"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@id/textview_pagibig_contrib"
+                    android:layout_below="@+id/spinner_working_days"
+                    android:layout_marginTop="5dp"
                     android:gravity="start"
                     android:paddingEnd="0dp"
                     android:paddingStart="10dp"
+
                     android:text="@string/text_daily_rate"
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp" />
@@ -194,77 +168,6 @@
                     android:text="@string/default_total_value"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/spinner_working_days"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/label_working_days"
-                    android:layout_toStartOf="@id/textview_sss_contrib"
-                    android:drawSelectorOnTop="true"
-                    android:entries="@array/string_array_working_days" />
-
-
-                <TextView
-                    android:id="@+id/label2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/label1"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/text_salary_period"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp" />
-
-                <Spinner
-                    android:id="@+id/spinner_salary_period"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/label2"
-                    android:layout_toStartOf="@id/textview_sss_contrib"
-                    android:drawSelectorOnTop="true"
-                    android:entries="@array/string_array_salary_period" />
-
-                <TextView
-                    android:id="@+id/label3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/spinner_salary_period"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/text_employment_status"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp" />
-
-                <Spinner
-                    android:id="@+id/spinner_employment_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/label3"
-                    android:layout_toStartOf="@id/textview_philhealth_contrib"
-                    android:drawSelectorOnTop="true"
-                    android:entries="@array/string_array_employment_status" />
-
-                <TextView
-                    android:id="@+id/label4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/spinner_employment_status"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp"
-                    android:text="@string/text_civil_status"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp" />
-
-                <Spinner
-                    android:id="@+id/spinner_civil_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/label4"
-                    android:layout_toStartOf="@id/textview_pagibig_contrib"
-                    android:drawSelectorOnTop="true"
-                    android:entries="@array/string_array_civil_status" />
 
 
             </RelativeLayout>

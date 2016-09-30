@@ -47,6 +47,8 @@
     <string name="text_miscellaneous">OTHER INCOME</string>
     <string name="text_miscellaneous_label">"OTHER INCOME  : "</string>
     <string name="text_basic_details_label">"BASIC SALARY  : "</string>
+    <string name="text_zero">0</string>
+    <string name="text_copyright">© 2016 VILLEGAS | GRANADOS</string>
     <string name="hint_working_hours">Working Hours</string>
     <string name="text_x">x</string>
     <string name="text_add_other_income">ADD OTHER INCOME</string>
@@ -103,6 +105,13 @@
         <item>NightDiff on Rest Day</item>
         <item>Custom Rate OT</item>
         <item>Custom Rate NightDiff</item>
+    </string-array>
+
+    <string-array name="string_array_salary_frequency">
+        <item>Daily</item>
+        <item>Semi-monthly</item>
+        <item>Monthly</item>
+        <item>Annually</item>
     </string-array>
 
 </resources>
