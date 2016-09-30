@@ -4,15 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.itseasyright.app.taxphcalculator.Entities.BirSalaryDeductions;
-import com.itseasyright.app.taxphcalculator.Entities.Philhealth;
-import com.itseasyright.app.taxphcalculator.Entities.Sss;
-
-import java.util.List;
 
 /**
  * Created by dione on 7 Sep 2016.
@@ -25,7 +18,7 @@ public class SyncDataActivity extends AppCompatActivity implements ITaxCalculato
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_data);
-        progressBar = (ProgressBar)findViewById(R.id.progressbar);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
         new ReadFileFromServerAsync(getApplicationContext(), this).execute();
     }
 

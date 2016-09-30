@@ -32,11 +32,11 @@
                     android:id="@+id/spinner_calculations_frequency"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="20dp"
                     android:layout_weight="1.5"
-                    android:gravity="center_vertical"
-                    android:visibility="visible"
                     android:entries="@array/string_array_salary_frequency"
-                    android:layout_marginEnd="20dp"/>
+                    android:gravity="center_vertical"
+                    android:visibility="visible" />
 
             </LinearLayout>
 

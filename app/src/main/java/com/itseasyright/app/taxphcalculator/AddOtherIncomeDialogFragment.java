@@ -46,7 +46,7 @@ public class AddOtherIncomeDialogFragment extends DialogFragment implements View
                             income));
                     getDialog().dismiss();
                 } else {
-                    Toast.makeText(getDialog().getContext(),"Error, Invalid input!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getDialog().getContext(), "Error, Invalid input!", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.button_close_dialog:
@@ -232,7 +232,6 @@ public class AddOtherIncomeDialogFragment extends DialogFragment implements View
                 computeNightDiffPay();
                 break;
         }
-
     }
 
     public interface IncomeDialogInterface {
@@ -272,6 +271,5 @@ public class AddOtherIncomeDialogFragment extends DialogFragment implements View
         binder.spinnerOtherIncomeType.setOnItemSelectedListener(this);
         binder.edittextCount.addTextChangedListener(this);
         binder.edittextRate.addTextChangedListener(this);
-
     }
 }

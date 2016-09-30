@@ -2,7 +2,6 @@ package com.itseasyright.app.taxphcalculator;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,24 +29,24 @@ public class OtherIncomeAdapter extends RecyclerView.Adapter<OtherIncomeAdapter.
 
     }
 
-    public void addItem(IncomeModel income){
+    public void addItem(IncomeModel income) {
         this.arrayIncome.add(income);
         notifyDataSetChanged();
     }
 
-    public void deleteItem(int position){
+    public void deleteItem(int position) {
         this.arrayIncome.remove(position);
         notifyDataSetChanged();
     }
 
-    public void clearItem(){
+    public void clearItem() {
         this.arrayIncome.clear();
         notifyDataSetChanged();
     }
 
-    public Double getOtherIncomeTotal(){
+    public Double getOtherIncomeTotal() {
         Double total = 0.0;
-        for(IncomeModel temp: arrayIncome){
+        for (IncomeModel temp : arrayIncome) {
             total += temp.getIncome();
         }
         return total;
@@ -61,7 +60,7 @@ public class OtherIncomeAdapter extends RecyclerView.Adapter<OtherIncomeAdapter.
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.getDefault());
         df = (DecimalFormat) nf;
         df.applyPattern("###,###,###.00");
-        return new ViewHolder(DataBindingUtil.inflate(inflater,R.layout.item_other_income_layout,parent,false).getRoot());
+        return new ViewHolder(DataBindingUtil.inflate(inflater, R.layout.item_other_income_layout, parent, false).getRoot());
     }
 
     @Override
@@ -83,7 +82,7 @@ public class OtherIncomeAdapter extends RecyclerView.Adapter<OtherIncomeAdapter.
             binder = DataBindingUtil.bind(itemView);
         }
 
-        public ItemOtherIncomeLayoutBinding getBinding(){
+        public ItemOtherIncomeLayoutBinding getBinding() {
             return binder;
         }
     }

@@ -8,11 +8,11 @@ public class IncomeModel {
     private Integer index;
     private Double income;
 
-    public  IncomeModel(){
+    public IncomeModel() {
 
     }
 
-    public IncomeModel(Integer i, Double income){
+    public IncomeModel(Integer i, Double income) {
         this.index = i;
         this.income = income;
     }

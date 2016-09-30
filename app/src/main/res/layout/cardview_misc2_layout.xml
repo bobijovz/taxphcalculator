@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_absent_day_s"
                         android:inputType="numberDecimal"
-                        android:selectAllOnFocus="true"/>
+                        android:selectAllOnFocus="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_tardiness_minute_s"
                         android:inputType="numberDecimal"
-                        android:selectAllOnFocus="true"/>
+                        android:selectAllOnFocus="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_undertime_minutes_s"
                         android:inputType="numberDecimal"
-                        android:selectAllOnFocus="true"/>
+                        android:selectAllOnFocus="true" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
