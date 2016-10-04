@@ -116,6 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_civil_status_label"
+                    android:layout_toStartOf="@+id/tv_daily_rate_label"
                     android:drawSelectorOnTop="true"
                     android:entries="@array/string_array_civil_status" />
 
